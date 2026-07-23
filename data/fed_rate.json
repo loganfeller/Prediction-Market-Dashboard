@@ -1,0 +1,22 @@
+{
+  "official": [
+    {"date": "2025-08-01", "value": 4.33},
+    {"date": "2025-09-01", "value": 4.33},
+    {"date": "2025-10-01", "value": 4.08},
+    {"date": "2025-11-01", "value": 3.83},
+    {"date": "2025-12-01", "value": 3.83},
+    {"date": "2026-01-01", "value": 3.83},
+    {"date": "2026-02-01", "value": 3.83},
+    {"date": "2026-03-01", "value": 3.83},
+    {"date": "2026-04-01", "value": 3.83},
+    {"date": "2026-05-01", "value": 3.83},
+    {"date": "2026-06-01", "value": 3.83}
+  ],
+  "market": [
+    {"slug": "fed-decision-in-july-cut-25bp", "title": "FOMC cuts to 3.50%-3.75%", "strike": 3.58, "implied_probability": 0.18, "volume": 88200, "close_time": "2026-07-29T18:00:00Z"},
+    {"slug": "fed-decision-in-july-hold", "title": "FOMC holds at 3.75%-4.00%", "strike": 3.83, "implied_probability": 0.79, "volume": 214500, "close_time": "2026-07-29T18:00:00Z"},
+    {"slug": "fed-decision-in-july-hike-25bp", "title": "FOMC hikes to 4.00%-4.25%", "strike": 4.08, "implied_probability": 0.03, "volume": 19700, "close_time": "2026-07-29T18:00:00Z"}
+  ],
+  "last_updated": "2026-07-23T12:00:00+00:00",
+  "note": "Sample/placeholder data for frontend development. Replace by running scripts/fetch_data.py with a live FRED_API_KEY set (Polymarket needs no key)."
+}
