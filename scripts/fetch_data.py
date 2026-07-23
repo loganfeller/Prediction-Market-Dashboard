@@ -47,7 +47,7 @@ POLYMARKET_SLUGS = {
         "cpi-yoy-above-2-9-percent-july-2026",
     ],
     "fed_rate": [
-        "fed-decision-in-july",  # Polymarket often runs this as one multi-outcome market
+        "fed-decision-in-july-181",  # Polymarket often runs this as one multi-outcome market
     ],
 }
 
