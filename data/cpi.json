@@ -1,25 +1,147 @@
 {
   "official": [
-    {"date": "2025-08-01", "value": 2.9},
-    {"date": "2025-09-01", "value": 3.0},
-    {"date": "2025-10-01", "value": 3.0},
-    {"date": "2025-11-01", "value": 2.8},
-    {"date": "2025-12-01", "value": 2.7},
-    {"date": "2026-01-01", "value": 2.8},
-    {"date": "2026-02-01", "value": 2.9},
-    {"date": "2026-03-01", "value": 2.9},
-    {"date": "2026-04-01", "value": 2.8},
-    {"date": "2026-05-01", "value": 2.7},
-    {"date": "2026-06-01", "value": 2.7}
+    {
+      "date": "2024-07-01",
+      "value": 2.94
+    },
+    {
+      "date": "2024-08-01",
+      "value": 2.61
+    },
+    {
+      "date": "2024-09-01",
+      "value": 2.43
+    },
+    {
+      "date": "2024-10-01",
+      "value": 2.58
+    },
+    {
+      "date": "2024-11-01",
+      "value": 2.72
+    },
+    {
+      "date": "2024-12-01",
+      "value": 2.87
+    },
+    {
+      "date": "2025-01-01",
+      "value": 2.99
+    },
+    {
+      "date": "2025-02-01",
+      "value": 2.8
+    },
+    {
+      "date": "2025-03-01",
+      "value": 2.38
+    },
+    {
+      "date": "2025-04-01",
+      "value": 2.33
+    },
+    {
+      "date": "2025-05-01",
+      "value": 2.38
+    },
+    {
+      "date": "2025-06-01",
+      "value": 2.68
+    },
+    {
+      "date": "2025-07-01",
+      "value": 2.74
+    },
+    {
+      "date": "2025-08-01",
+      "value": 2.94
+    },
+    {
+      "date": "2025-09-01",
+      "value": 3.02
+    },
+    {
+      "date": "2025-11-01",
+      "value": 2.7
+    },
+    {
+      "date": "2025-12-01",
+      "value": 2.65
+    },
+    {
+      "date": "2026-01-01",
+      "value": 2.39
+    },
+    {
+      "date": "2026-02-01",
+      "value": 2.43
+    },
+    {
+      "date": "2026-03-01",
+      "value": 3.29
+    },
+    {
+      "date": "2026-04-01",
+      "value": 3.78
+    },
+    {
+      "date": "2026-05-01",
+      "value": 4.17
+    },
+    {
+      "date": "2026-06-01",
+      "value": 3.46
+    }
   ],
   "market": [
-    {"slug": "cpi-yoy-below-2-5-percent-july-2026", "title": "CPI YoY below 2.5%", "strike": 2.5, "implied_probability": 0.08, "volume": 41200, "close_time": "2026-08-13T12:30:00Z"},
-    {"slug": "cpi-yoy-2-5-2-6-percent-july-2026", "title": "CPI YoY 2.5%-2.6%", "strike": 2.6, "implied_probability": 0.14, "volume": 62800, "close_time": "2026-08-13T12:30:00Z"},
-    {"slug": "cpi-yoy-2-6-2-7-percent-july-2026", "title": "CPI YoY 2.6%-2.7%", "strike": 2.7, "implied_probability": 0.31, "volume": 118400, "close_time": "2026-08-13T12:30:00Z"},
-    {"slug": "cpi-yoy-2-7-2-8-percent-july-2026", "title": "CPI YoY 2.7%-2.8%", "strike": 2.8, "implied_probability": 0.27, "volume": 97600, "close_time": "2026-08-13T12:30:00Z"},
-    {"slug": "cpi-yoy-2-8-2-9-percent-july-2026", "title": "CPI YoY 2.8%-2.9%", "strike": 2.9, "implied_probability": 0.13, "volume": 54300, "close_time": "2026-08-13T12:30:00Z"},
-    {"slug": "cpi-yoy-above-2-9-percent-july-2026", "title": "CPI YoY above 2.9%", "strike": 3.0, "implied_probability": 0.07, "volume": 33900, "close_time": "2026-08-13T12:30:00Z"}
+    {
+      "slug": "cpi-yoy-below-2-5-percent-july-2026",
+      "title": "CPI YoY below 2.5%",
+      "strike": 2.5,
+      "implied_probability": 0.08,
+      "volume": 41200,
+      "close_time": "2026-08-13T12:30:00Z"
+    },
+    {
+      "slug": "cpi-yoy-2-5-2-6-percent-july-2026",
+      "title": "CPI YoY 2.5%-2.6%",
+      "strike": 2.6,
+      "implied_probability": 0.14,
+      "volume": 62800,
+      "close_time": "2026-08-13T12:30:00Z"
+    },
+    {
+      "slug": "cpi-yoy-2-6-2-7-percent-july-2026",
+      "title": "CPI YoY 2.6%-2.7%",
+      "strike": 2.7,
+      "implied_probability": 0.31,
+      "volume": 118400,
+      "close_time": "2026-08-13T12:30:00Z"
+    },
+    {
+      "slug": "cpi-yoy-2-7-2-8-percent-july-2026",
+      "title": "CPI YoY 2.7%-2.8%",
+      "strike": 2.8,
+      "implied_probability": 0.27,
+      "volume": 97600,
+      "close_time": "2026-08-13T12:30:00Z"
+    },
+    {
+      "slug": "cpi-yoy-2-8-2-9-percent-july-2026",
+      "title": "CPI YoY 2.8%-2.9%",
+      "strike": 2.9,
+      "implied_probability": 0.13,
+      "volume": 54300,
+      "close_time": "2026-08-13T12:30:00Z"
+    },
+    {
+      "slug": "cpi-yoy-above-2-9-percent-july-2026",
+      "title": "CPI YoY above 2.9%",
+      "strike": 3.0,
+      "implied_probability": 0.07,
+      "volume": 33900,
+      "close_time": "2026-08-13T12:30:00Z"
+    }
   ],
-  "last_updated": "2026-07-23T12:00:00+00:00",
-  "note": "Sample/placeholder data for frontend development. Replace by running scripts/fetch_data.py with a live FRED_API_KEY set (Polymarket needs no key)."
+  "last_updated": "2026-07-23T16:14:15.519237+00:00"
 }
