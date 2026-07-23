@@ -23,7 +23,7 @@ from datetime import datetime, timezone
 
 import requests
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY")
 
