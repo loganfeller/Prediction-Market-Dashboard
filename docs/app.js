@@ -1,6 +1,6 @@
 const INDICATORS = [
-  { key: "cpi", file: "../data/cpi.json", title: "CPI, Year-over-Year", unit: "%", tickerLabel: "CPI YoY" },
-  { key: "fed_rate", file: "../data/fed_rate.json", title: "Fed Funds Rate (Upper Bound)", unit: "%", tickerLabel: "FED FUNDS" },
+  { key: "cpi", file: "data/cpi.json", title: "CPI, Year-over-Year", unit: "%", tickerLabel: "CPI YoY" },
+  { key: "fed_rate", file: "data/fed_rate.json", title: "Fed Funds Rate (Upper Bound)", unit: "%", tickerLabel: "FED FUNDS" },
 ];
 
 const CHART_COLORS = {
