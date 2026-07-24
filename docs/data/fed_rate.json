@@ -163,15 +163,15 @@
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-      "implied_probability": 0.7625,
-      "volume": 26809400.723794647,
+      "implied_probability": 0.7485,
+      "volume": 26840868.554055642,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.2365,
-      "volume": 18254407.459637694,
+      "implied_probability": 0.243,
+      "volume": 18263508.887951694,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
@@ -182,5 +182,5 @@
       "close_time": "2026-07-29T00:00:00Z"
     }
   ],
-  "last_updated": "2026-07-24T17:25:55.781720+00:00"
+  "last_updated": "2026-07-24T17:31:59.476495+00:00"
 }
