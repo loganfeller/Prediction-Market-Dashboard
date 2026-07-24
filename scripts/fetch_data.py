@@ -93,19 +93,21 @@ def cpi_yoy_from_index(index_series):
     return out
 
 
-def fetch_polymarket_market(slug):
+def fetch_polymarket_event_markets(event_slug):
     """
-    Fetch a single Polymarket market by slug. No authentication needed --
-    this endpoint is fully public. Returns None if the slug isn't found
-    (e.g. because a new release cycle's market has a different slug).
+    Fetch an EVENT by slug and return its underlying markets. Some Polymarket
+    questions (like Fed rate decisions) are structured as one event containing
+    several markets -- one per outcome bracket -- rather than a single flat
+    market. This is different from fetch_polymarket_market() above, which
+    looks up a standalone market directly.
     """
-    resp = requests.get(f"{GAMMA_API_BASE}/markets", params={"slug": slug}, timeout=30)
+    resp = requests.get(f"{GAMMA_API_BASE}/events", params={"slug": event_slug}, timeout=30)
     resp.raise_for_status()
     results = resp.json()
     if not results:
-        print(f"[polymarket] no market found for slug '{slug}' -- may need updating")
-        return None
-    return results[0]
+        print(f"[polymarket] no event found for slug '{event_slug}' -- may need updating")
+        return []
+    return results[0].get("markets", [])
 
 
 def parse_market_to_row(market):
