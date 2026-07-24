@@ -138,6 +138,17 @@ def fetch_polymarket_markets(slugs):
     return rows if rows else None
 
 
+def fetch_polymarket_event(event_slug):
+    """Fetch all markets under an event slug and convert each to a row."""
+    markets = fetch_polymarket_event_markets(event_slug)
+    rows = []
+    for market in markets:
+        row = parse_market_to_row(market)
+        if row["implied_probability"] is not None:
+            rows.append(row)
+    return rows if rows else None
+
+
 def load_existing(name):
     path = os.path.join(DATA_DIR, f"{name}.json")
     if os.path.exists(path):
@@ -166,7 +177,10 @@ def main():
             official = cpi_yoy_from_index(fred_raw) if indicator == "cpi" else fred_raw
 
         market = existing["market"]
-        poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
+       if indicator == "fed_rate":
+            poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0])
+        else:
+            poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
         if poly_rows is not None:
             market = poly_rows
 
