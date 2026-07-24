@@ -177,7 +177,7 @@ def main():
             official = cpi_yoy_from_index(fred_raw) if indicator == "cpi" else fred_raw
 
         market = existing["market"]
-       if indicator == "fed_rate":
+        if indicator == "fed_rate":
             poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0])
         else:
             poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
