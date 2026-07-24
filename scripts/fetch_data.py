@@ -38,7 +38,6 @@ FRED_SERIES = {
 # https://polymarket.com for the current slug of each event.
 POLYMARKET_SLUGS = {
     "cpi": [
-        # one slug per strike/range in the current CPI release's market group
         "cpi-yoy-below-2-5-percent-july-2026",
         "cpi-yoy-2-5-2-6-percent-july-2026",
         "cpi-yoy-2-6-2-7-percent-july-2026",
@@ -47,7 +46,7 @@ POLYMARKET_SLUGS = {
         "cpi-yoy-above-2-9-percent-july-2026",
     ],
     "fed_rate": [
-        "fed-decision-in-july-181",  # Polymarket often runs this as one multi-outcome market
+        "fed-decision-in-july-181",
     ],
 }
 
@@ -71,7 +70,7 @@ def fetch_fred_series(series_id, limit=36):
     resp = requests.get(FRED_API_BASE, params=params, timeout=30)
     resp.raise_for_status()
     obs = resp.json().get("observations", [])
-    obs = list(reversed(obs))  # chronological order
+    obs = list(reversed(obs))
     return [
         {"date": o["date"], "value": float(o["value"])}
         for o in obs
@@ -93,13 +92,26 @@ def cpi_yoy_from_index(index_series):
     return out
 
 
+def fetch_polymarket_market(slug):
+    """
+    Fetch a single Polymarket market by slug. No authentication needed --
+    this endpoint is fully public. Returns None if the slug isn't found.
+    """
+    resp = requests.get(f"{GAMMA_API_BASE}/markets", params={"slug": slug}, timeout=30)
+    resp.raise_for_status()
+    results = resp.json()
+    if not results:
+        print(f"[polymarket] no market found for slug '{slug}' -- may need updating")
+        return None
+    return results[0]
+
+
 def fetch_polymarket_event_markets(event_slug):
     """
     Fetch an EVENT by slug and return its underlying markets. Some Polymarket
     questions (like Fed rate decisions) are structured as one event containing
     several markets -- one per outcome bracket -- rather than a single flat
-    market. This is different from fetch_polymarket_market() above, which
-    looks up a standalone market directly.
+    market.
     """
     resp = requests.get(f"{GAMMA_API_BASE}/events", params={"slug": event_slug}, timeout=30)
     resp.raise_for_status()
@@ -112,8 +124,6 @@ def fetch_polymarket_event_markets(event_slug):
 
 def parse_market_to_row(market):
     """Extract the fields the frontend needs from a raw Gamma API market object."""
-    # outcomePrices/outcomes are JSON-encoded strings in the Gamma API response
-    outcomes = json.loads(market.get("outcomes", "[]"))
     prices = json.loads(market.get("outcomePrices", "[]"))
     yes_price = float(prices[0]) if prices else None
 
