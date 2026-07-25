@@ -150,37 +150,37 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 12467223.606148923,
+      "volume": 13071988.049148913,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.0035,
-      "volume": 14757138.128656097,
+      "implied_probability": 0.0045,
+      "volume": 15195348.053987088,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-      "implied_probability": 0.7485,
-      "volume": 26840868.554055642,
+      "implied_probability": 0.7495,
+      "volume": 27288817.974840708,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.243,
-      "volume": 18263508.887951694,
+      "implied_probability": 0.2475,
+      "volume": 18390975.746436674,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
-      "implied_probability": 0.0065,
-      "volume": 17626950.365786888,
+      "implied_probability": 0.0075,
+      "volume": 17964341.87172588,
       "close_time": "2026-07-29T00:00:00Z"
     }
   ],
-  "last_updated": "2026-07-24T17:31:59.476495+00:00"
+  "last_updated": "2026-07-25T14:39:55.514905+00:00"
 }
