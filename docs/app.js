@@ -18,7 +18,17 @@ function fmtPct(v) {
 function fmtDate(d) {
   return new Date(d).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
-
+function shortMarketLabel(title) {
+  if (!title) return title;
+  if (/no change/i.test(title)) return "No change";
+  const bpsMatch = title.match(/(\d+)\+?\s*bps/i);
+  if (!bpsMatch) return title.length > 28 ? title.slice(0, 28) + "…" : title;
+  const bps = bpsMatch[1];
+  const isDecrease = /\bdecrease\b/i.test(title);
+  const isIncrease = /\bincrease\b/i.test(title);
+  const sign = isDecrease ? "-" : isIncrease ? "+" : "";
+  return `${sign}${bps} bps`;
+}
 function expectedValue(marketRows) {
   const totalProb = marketRows.reduce((sum, r) => sum + r.implied_probability, 0) || 1;
   const weighted = marketRows.reduce((sum, r) => sum + r.strike * r.implied_probability, 0);
@@ -92,10 +102,10 @@ function renderCard(spec, data, container) {
     },
   });
 
-  new Chart(marketCanvas, {
+new Chart(marketCanvas, {
     type: "bar",
     data: {
-      labels: data.market.map((r) => r.title),
+      labels: data.market.map((r) => shortMarketLabel(r.title)),
       datasets: [{
         data: data.market.map((r) => Math.round(r.implied_probability * 100)),
         backgroundColor: CHART_COLORS.market,
