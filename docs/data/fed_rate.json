@@ -150,7 +150,7 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 15022744.5461489,
+      "volume": 15047028.3541489,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.13
     },
@@ -158,7 +158,7 @@
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 16912640.617695022,
+      "volume": 16942841.61869502,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.38
     },
@@ -166,7 +166,7 @@
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
       "implied_probability": 0.7345,
-      "volume": 29786654.347797986,
+      "volume": 29803926.15250399,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.63
     },
@@ -174,7 +174,7 @@
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.2655,
-      "volume": 19776200.10941743,
+      "volume": 19793765.64834544,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.88
     },
@@ -182,10 +182,10 @@
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0055,
-      "volume": 19842659.386300866,
+      "volume": 19859380.72270086,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 4.13
     }
   ],
-  "last_updated": "2026-07-27T19:41:10.084592+00:00"
+  "last_updated": "2026-07-27T19:47:05.848758+00:00"
 }
