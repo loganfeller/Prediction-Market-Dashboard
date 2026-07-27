@@ -150,37 +150,37 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 13745748.869148914,
+      "volume": 14817610.654148895,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.0045,
-      "volume": 15412922.992237102,
+      "implied_probability": 0.0025,
+      "volume": 16338727.937541014,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-      "implied_probability": 0.8275,
-      "volume": 27783842.397420987,
+      "implied_probability": 0.7285,
+      "volume": 29422587.93178602,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.1725,
-      "volume": 18656924.5815575,
+      "implied_probability": 0.2705,
+      "volume": 19517997.259336427,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
-      "implied_probability": 0.0065,
-      "volume": 18583774.536756832,
+      "implied_probability": 0.0055,
+      "volume": 19659656.09503987,
       "close_time": "2026-07-29T00:00:00Z"
     }
   ],
-  "last_updated": "2026-07-26T14:40:48.102361+00:00"
+  "last_updated": "2026-07-27T15:47:12.741054+00:00"
 }
