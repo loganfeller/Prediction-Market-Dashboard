@@ -28,8 +28,9 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
 FRED_API_KEY = os.environ.get("FRED_API_KEY")
 
 FRED_SERIES = {
-    "cpi": "CPIAUCSL",       # CPI for All Urban Consumers, index (used to derive YoY %)
-    "fed_rate": "FEDFUNDS",  # Effective federal funds rate
+    "cpi": "CPIAUCSL",
+    "fed_rate": "FEDFUNDS",
+    "ecb_rate": "ECBDFR",
 }
 
 # Polymarket market slugs change every release cycle (e.g. a new CPI market
@@ -47,6 +48,9 @@ POLYMARKET_SLUGS = {
     ],
     "fed_rate": [
         "fed-decision-in-july-181",
+    ],
+    "ecb_rate": [
+        "ecb-interest-rates-july-2026",
     ],
 }
 
@@ -178,7 +182,7 @@ def main():
     os.makedirs(DATA_DIR, exist_ok=True)
     now = datetime.now(timezone.utc).isoformat()
 
-    for indicator in ("cpi", "fed_rate"):
+    for indicator in ("cpi", "fed_rate", "ecb_rate"):
         existing = load_existing(indicator)
 
         official = existing["official"]
@@ -187,7 +191,7 @@ def main():
             official = cpi_yoy_from_index(fred_raw) if indicator == "cpi" else fred_raw
 
         market = existing["market"]
-        if indicator == "fed_rate":
+       if indicator in ("fed_rate", "ecb_rate"):
             poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0])
         else:
             poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
