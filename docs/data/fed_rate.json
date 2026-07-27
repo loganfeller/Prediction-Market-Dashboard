@@ -150,37 +150,37 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 14817610.654148895,
+      "volume": 14999450.0151489,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.0025,
-      "volume": 16338727.937541014,
+      "implied_probability": 0.0015,
+      "volume": 16781017.07469502,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-      "implied_probability": 0.7285,
-      "volume": 29422587.93178602,
+      "implied_probability": 0.7335,
+      "volume": 29756404.946130995,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.2705,
-      "volume": 19517997.259336427,
+      "implied_probability": 0.2655,
+      "volume": 19738904.42370442,
       "close_time": "2026-07-29T00:00:00Z"
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0055,
-      "volume": 19659656.09503987,
+      "volume": 19794662.23363586,
       "close_time": "2026-07-29T00:00:00Z"
     }
   ],
-  "last_updated": "2026-07-27T15:47:12.741054+00:00"
+  "last_updated": "2026-07-27T19:05:16.856956+00:00"
 }
