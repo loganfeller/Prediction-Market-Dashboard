@@ -13,6 +13,13 @@ Required environment variable (set as a GitHub Actions secret):
   FRED_API_KEY - https://fred.stlouisfed.org/docs/api/api_key.html
 
 Polymarket needs no credentials at all for reading market data.
+
+NOTE on FRED series frequency: CPIAUCSL and FEDFUNDS are MONTHLY series, so
+pulling the most recent N observations gives N months of history. ECBDFR is
+a DAILY series (a value is published every day, even when the rate hasn't
+changed) -- pulling N observations there gives only N days. To keep the ECB
+chart comparable to the other two, we pull a larger daily window and then
+collapse it to one observation per month.
 """
 
 import json
@@ -31,6 +38,15 @@ FRED_SERIES = {
     "ecb_rate": "ECBDFR",
 }
 
+# Most FRED series here are monthly, so 36 observations = 36 months. ECBDFR
+# is daily, so it needs a much larger window to cover the same real span --
+# 400 days comfortably covers 11+ months even with weekends/holidays gaps.
+FRED_FETCH_LIMIT = {
+    "cpi": 36,
+    "fed_rate": 36,
+    "ecb_rate": 400,
+}
+
 POLYMARKET_SLUGS = {
     "cpi": [
         "cpi-yoy-below-2-5-percent-july-2026",
@@ -43,7 +59,7 @@ POLYMARKET_SLUGS = {
     "fed_rate": [
         "fed-decision-in-july-181",
     ],
-"ecb_rate": [
+    "ecb_rate": [
         "ecb-interest-rates-september-2026-20260616222636097",
     ],
 }
@@ -53,7 +69,7 @@ FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 
 def fetch_fred_series(series_id, limit=36):
-    """Pull the most recent `limit` monthly observations for a FRED series."""
+    """Pull the most recent `limit` observations for a FRED series."""
     if not FRED_API_KEY:
         print(f"[fred] no FRED_API_KEY set, skipping {series_id}")
         return None
@@ -88,6 +104,19 @@ def cpi_yoy_from_index(index_series):
             pct = (by_date[d] / by_date[prior_year_date] - 1) * 100
             out.append({"date": d, "value": round(pct, 2)})
     return out
+
+
+def last_observation_per_month(series):
+    """
+    Collapse a daily (or otherwise sub-monthly) series down to one
+    observation per calendar month -- the last one available that month --
+    so a daily series charts the same way as a monthly one.
+    """
+    by_month = {}
+    for row in series:
+        month_key = row["date"][:7]  # "YYYY-MM"
+        by_month[month_key] = row
+    return [by_month[key] for key in sorted(by_month.keys())]
 
 
 def fetch_polymarket_market(slug):
@@ -180,9 +209,14 @@ def main():
         existing = load_existing(indicator)
 
         official = existing["official"]
-        fred_raw = fetch_fred_series(FRED_SERIES[indicator])
+        fred_raw = fetch_fred_series(FRED_SERIES[indicator], limit=FRED_FETCH_LIMIT[indicator])
         if fred_raw is not None:
-            official = cpi_yoy_from_index(fred_raw) if indicator == "cpi" else fred_raw
+            if indicator == "cpi":
+                official = cpi_yoy_from_index(fred_raw)
+            elif indicator == "ecb_rate":
+                official = last_observation_per_month(fred_raw)
+            else:
+                official = fred_raw
 
         market = existing["market"]
         if indicator in ("fed_rate", "ecb_rate"):
