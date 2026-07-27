@@ -1,15 +1,13 @@
 """
 Fetches official indicator data (FRED) and prediction-market-implied data
-(Polymarket) for the two MVP indicators: headline CPI (YoY) and the Fed
-funds rate.
+(Polymarket) for three indicators: headline CPI (YoY), the Fed funds rate,
+and the ECB deposit facility rate.
 
-Writes plain JSON files to /data that the static frontend reads directly.
+Writes plain JSON files to /docs/data that the static frontend reads directly.
 Designed to run on a schedule via GitHub Actions (see .github/workflows/fetch-data.yml).
 
-Polymarket's Gamma API is fully public and read-only for market data — no
-API key, wallet, or signed requests needed. This is why it replaced Kalshi
-in this project: Kalshi's API requires RSA-PSS signed requests for every
-call, while Polymarket just needs a plain GET.
+Polymarket's Gamma API is fully public and read-only for market data -- no
+API key, wallet, or signed requests needed.
 
 Required environment variable (set as a GitHub Actions secret):
   FRED_API_KEY - https://fred.stlouisfed.org/docs/api/api_key.html
@@ -33,10 +31,6 @@ FRED_SERIES = {
     "ecb_rate": "ECBDFR",
 }
 
-# Polymarket market slugs change every release cycle (e.g. a new CPI market
-# opens each month, a new Fed-decision market opens each FOMC cycle).
-# Update these slugs when a fetch comes back empty — check
-# https://polymarket.com for the current slug of each event.
 POLYMARKET_SLUGS = {
     "cpi": [
         "cpi-yoy-below-2-5-percent-july-2026",
@@ -113,9 +107,9 @@ def fetch_polymarket_market(slug):
 def fetch_polymarket_event_markets(event_slug):
     """
     Fetch an EVENT by slug and return its underlying markets. Some Polymarket
-    questions (like Fed rate decisions) are structured as one event containing
-    several markets -- one per outcome bracket -- rather than a single flat
-    market.
+    questions (like Fed/ECB rate decisions) are structured as one event
+    containing several markets -- one per outcome bracket -- rather than a
+    single flat market.
     """
     resp = requests.get(f"{GAMMA_API_BASE}/events", params={"slug": event_slug}, timeout=30)
     resp.raise_for_status()
@@ -191,7 +185,7 @@ def main():
             official = cpi_yoy_from_index(fred_raw) if indicator == "cpi" else fred_raw
 
         market = existing["market"]
-       if indicator in ("fed_rate", "ecb_rate"):
+        if indicator in ("fed_rate", "ecb_rate"):
             poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0])
         else:
             poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
