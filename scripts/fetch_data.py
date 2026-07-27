@@ -43,8 +43,8 @@ POLYMARKET_SLUGS = {
     "fed_rate": [
         "fed-decision-in-july-181",
     ],
-    "ecb_rate": [
-        "ecb-interest-rates-july-2026",
+   "ecb_rate": [
+        "ecb-interest-rates-september-2026",
     ],
 }
 
