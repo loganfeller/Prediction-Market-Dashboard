@@ -129,18 +129,23 @@ def last_observation_per_month(series):
 def parse_bps_change(title):
     """
     Extract a signed basis-point change from a rate-decision market title.
-    Returns 0 for "no change", a signed int for "X bps increase/decrease",
-    or None if the title doesn't match either pattern.
+    Order-independent: matches both "25 bps increase" (ECB phrasing) and
+    "decrease interest rates by 25 bps" (Fed phrasing). Returns 0 for
+    "no change", a signed int otherwise, or None if nothing matches.
     """
     if not title:
         return None
     if re.search(r"no change", title, re.IGNORECASE):
         return 0
-    match = BPS_PATTERN.search(title)
-    if not match:
+    bps_match = re.search(r"(\d+)\+?\s*bps", title, re.IGNORECASE)
+    if not bps_match:
         return None
-    bps, direction = int(match.group(1)), match.group(2).lower()
-    return bps if direction == "increase" else -bps
+    bps = int(bps_match.group(1))
+    if re.search(r"\bdecrease\b", title, re.IGNORECASE):
+        return -bps
+    if re.search(r"\bincrease\b", title, re.IGNORECASE):
+        return bps
+    return None
 
 
 def fetch_polymarket_market(slug):
