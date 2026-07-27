@@ -147,40 +147,40 @@
   ],
   "market": [
     {
-      "slug": "will-the-ecb-announce-a-50-bps-decrease-at-the-july-2026-meeting",
-      "title": "Will the ECB announce a 50+ bps decrease at the July 2026 meeting?",
-      "implied_probability": 0.0,
-      "volume": 45523.359502999985,
-      "close_time": "2026-07-23T00:00:00Z"
+      "slug": "will-the-ecb-announce-a-50-bps-decrease-at-the-september-2026-meeting-20260616222656563",
+      "title": "Will the ECB announce a 50+ bps decrease at the September 2026 meeting?",
+      "implied_probability": 0.001,
+      "volume": 13669.291750999999,
+      "close_time": "2026-09-10T11:59:00Z"
     },
     {
-      "slug": "will-the-ecb-announce-a-25-bps-decrease-at-the-july-2026-meeting",
-      "title": "Will the ECB announce a 25 bps decrease at the July 2026 meeting?",
-      "implied_probability": 0.0,
-      "volume": 74680.39140000007,
-      "close_time": "2026-07-23T00:00:00Z"
+      "slug": "will-the-ecb-announce-a-25-bps-decrease-at-the-september-2026-meeting-20260616222656564",
+      "title": "Will the ECB announce a 25 bps decrease at the September 2026 meeting?",
+      "implied_probability": 0.004,
+      "volume": 21673.802076000007,
+      "close_time": "2026-09-10T11:59:00Z"
     },
     {
-      "slug": "will-the-ecb-announce-no-change-at-the-july-2026-meeting",
-      "title": "Will the ECB announce no change at the July 2026 meeting?",
-      "implied_probability": 1.0,
-      "volume": 219007.35805700012,
-      "close_time": "2026-07-23T00:00:00Z"
+      "slug": "will-the-ecb-announce-no-change-at-the-september-2026-meeting-20260616222656565",
+      "title": "Will the ECB announce no change at the September 2026 meeting?",
+      "implied_probability": 0.19,
+      "volume": 40117.09476,
+      "close_time": "2026-09-10T11:59:00Z"
     },
     {
-      "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-july-2026-meeting",
-      "title": "Will the ECB announce a 25 bps increase at the July 2026 meeting?",
-      "implied_probability": 0.0,
-      "volume": 138807.27311400004,
-      "close_time": "2026-07-23T00:00:00Z"
+      "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
+      "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
+      "implied_probability": 0.8,
+      "volume": 46178.37673000003,
+      "close_time": "2026-09-10T11:59:00Z"
     },
     {
-      "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-july-2026-meeting",
-      "title": "Will the ECB announce a 50+ bps increase at the July 2026 meeting?",
-      "implied_probability": 0.0,
-      "volume": 81290.70381400001,
-      "close_time": "2026-07-23T00:00:00Z"
+      "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-september-2026-meeting-20260616222656567",
+      "title": "Will the ECB announce a 50+ bps increase at the September 2026 meeting?",
+      "implied_probability": 0.0205,
+      "volume": 23792.82528700001,
+      "close_time": "2026-09-10T11:59:00Z"
     }
   ],
-  "last_updated": "2026-07-27T19:10:39.926736+00:00"
+  "last_updated": "2026-07-27T19:14:09.952366+00:00"
 }
