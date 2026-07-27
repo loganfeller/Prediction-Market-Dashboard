@@ -150,21 +150,23 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 15011704.5461489,
-      "close_time": "2026-07-29T00:00:00Z"
+      "volume": 15022744.5461489,
+      "close_time": "2026-07-29T00:00:00Z",
+      "strike": 3.13
     },
     {
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 16897106.97769502,
-      "close_time": "2026-07-29T00:00:00Z"
+      "volume": 16912640.617695022,
+      "close_time": "2026-07-29T00:00:00Z",
+      "strike": 3.38
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
       "implied_probability": 0.7345,
-      "volume": 29775581.916123986,
+      "volume": 29786654.347797986,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.63
     },
@@ -172,16 +174,18 @@
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.2655,
-      "volume": 19766113.85199343,
-      "close_time": "2026-07-29T00:00:00Z"
+      "volume": 19776200.10941743,
+      "close_time": "2026-07-29T00:00:00Z",
+      "strike": 3.88
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0055,
-      "volume": 19831540.701100867,
-      "close_time": "2026-07-29T00:00:00Z"
+      "volume": 19842659.386300866,
+      "close_time": "2026-07-29T00:00:00Z",
+      "strike": 4.13
     }
   ],
-  "last_updated": "2026-07-27T19:35:33.525344+00:00"
+  "last_updated": "2026-07-27T19:41:10.084592+00:00"
 }
