@@ -150,7 +150,7 @@
       "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 15047028.3541489,
+      "volume": 18069847.616754938,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.13
     },
@@ -158,23 +158,23 @@
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed decrease interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.0015,
-      "volume": 16942841.61869502,
+      "volume": 18395669.20669504,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.38
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
       "title": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-      "implied_probability": 0.7345,
-      "volume": 29803926.15250399,
+      "implied_probability": 0.7865,
+      "volume": 31447069.276743874,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.63
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.2655,
-      "volume": 19793765.64834544,
+      "implied_probability": 0.213,
+      "volume": 22035710.409685206,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 3.88
     },
@@ -182,10 +182,10 @@
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Will the Fed increase interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0055,
-      "volume": 19859380.72270086,
+      "volume": 21289535.00397182,
       "close_time": "2026-07-29T00:00:00Z",
       "strike": 4.13
     }
   ],
-  "last_updated": "2026-07-27T19:47:05.848758+00:00"
+  "last_updated": "2026-07-28T15:25:45.898038+00:00"
 }
