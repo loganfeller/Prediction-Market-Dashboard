@@ -226,7 +226,35 @@ def summarize(results):
     }
 
 
+def find_fx_tag_id():
+    """
+    One-time diagnostic: look up several candidate tag slugs directly via
+    the Gamma API tags-by-slug endpoint, to find the real numeric tag ID
+    for FX/currency markets rather than guessing parameter combinations
+    against the broad parent Finance tag (120), which was confirmed NOT
+    to surface FX content on its own.
+    """
+    candidate_slugs = [
+        "forex", "foreign-exchange", "currency", "currencies",
+        "exchange-rate", "exchange-rates", "fx", "dollar",
+    ]
+    for slug in candidate_slugs:
+        try:
+            resp = requests.get(f"{GAMMA_API_BASE}/tags/slug/{slug}", timeout=15)
+            if resp.status_code == 200:
+                tag = resp.json()
+                tag_id = tag.get("id")
+                tag_label = tag.get("label")
+                print(f"[fx] FOUND tag for slug {slug}: id={tag_id} label={tag_label}")
+            else:
+                print(f"[fx] slug {slug} -> status {resp.status_code}")
+        except Exception as e:
+            print(f"[fx] slug {slug} -> request failed: {e}")
+        time.sleep(0.3)
+
+
 def main():
+    find_fx_tag_id()
     print("[fx] fetching closed Finance-tagged events...")
     events = fetch_closed_finance_events()
     print(f"[fx] fetched {len(events)} closed Finance events total")
