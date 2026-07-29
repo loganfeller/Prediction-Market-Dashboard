@@ -23,10 +23,14 @@ NOTE on the BOJ policy rate: FRED international series for Japan policy rate
 (tried IRSTCB01JPM156N, then INTDSRJPM193N) both turned out to be stale or
 discontinued despite appearing current on FRED own pages. The BOJ own
 official API (launched publicly in Feb 2026) is used instead as the primary
-source. The series code used (built below without a literal apostrophe
-character, to avoid smart-quote corruption on copy/paste) refers to
-"Call Rate, Uncollateralized Overnight, Average" and was confirmed live
-through April 2026 directly on the BOJ statistics site.
+source. Per the BOJ API manual, the db and code parameters must be supplied
+separately (db=FM02, code=STRACLUCON) -- combining them into one string with
+the DB name prefixed to the series code (as shown on the BOJ website, joined
+by an apostrophe) causes an Invalid Input Parameters error. This series
+(Call Rate, Uncollateralized Overnight, Average) was confirmed live through
+April 2026 directly on the BOJ statistics site. Response dates come back in
+YYYYMM format (monthly), converted here to YYYY-MM-01 for consistency with
+the other indicators.
 
 NOTE on rate-decision markets: Fed, ECB, and BOJ rate-decision events on
 Polymarket are structured as several yes/no questions per meeting (e.g.
@@ -63,13 +67,10 @@ FRED_FETCH_LIMIT = {
 }
 
 # BOJ policy rate is fetched separately, from the Bank of Japan own API.
-# The real series code contains a literal apostrophe character between FM02
-# and STRACLUCON. It is built here with chr(39) instead of typing that
-# character directly, since a stray apostrophe in this file has repeatedly
-# been corrupted into a curly quote during copy and paste, which breaks
-# Python string parsing.
+# db and code are two separate request parameters (see module docstring).
 BOJ_API_BASE = "https://www.stat-search.boj.or.jp/api/v1"
-BOJ_SERIES_CODE = "FM02" + chr(39) + "STRACLUCON"
+BOJ_DB = "FM02"
+BOJ_CODE = "STRACLUCON"
 
 POLYMARKET_SLUGS = {
     "cpi": [
@@ -119,52 +120,68 @@ def fetch_fred_series(series_id, limit=36):
     ]
 
 
-def fetch_boj_series(series_code, limit=36):
+def find_series_data_dict(node):
+    """
+    Recursively search a parsed BOJ API JSON response for the dict that
+    contains both SURVEY_DATES and VALUES arrays (the documented output
+    tags). The exact nesting under the top-level response is not fully
+    confirmed, so this searches rather than assuming a fixed path.
+    """
+    if isinstance(node, dict):
+        if "SURVEY_DATES" in node and "VALUES" in node:
+            return node
+        for value in node.values():
+            found = find_series_data_dict(value)
+            if found is not None:
+                return found
+    elif isinstance(node, list):
+        for item in node:
+            found = find_series_data_dict(item)
+            if found is not None:
+                return found
+    return None
+
+
+def fetch_boj_series(db, code, limit=36):
     """
     Pull the most recent limit monthly observations for a BOJ series via
     the Bank of Japan own public API. No API key needed.
-
-    NOTE: this endpoint and response format are newer and less thoroughly
-    documented than FRED -- if this comes back empty or errors, print the
-    raw response for debugging rather than failing silently, since the exact
-    parameter names or response shape may need adjustment.
     """
     params = {
-        "code": series_code,
+        "db": db,
+        "code": code,
         "format": "json",
+        "lang": "en",
     }
     try:
         resp = requests.get(f"{BOJ_API_BASE}/getDataCode", params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
     except Exception as e:
-        print(f"[boj] request failed for series {series_code}: {e}")
+        print(f"[boj] request failed for db={db} code={code}: {e}")
         return None
 
-    series_list = None
-    if isinstance(data, dict):
-        for key in ("SERIES", "series", "GO_RESULT", "data"):
-            if key in data:
-                series_list = data[key]
-                break
-    if series_list is None:
-        print(f"[boj] unrecognized response shape for {series_code}: keys={list(data.keys()) if isinstance(data, dict) else type(data)}")
+    series_data = find_series_data_dict(data)
+    if series_data is None:
+        print(f"[boj] could not locate SURVEY_DATES/VALUES in response for db={db} code={code}")
+        print(f"[boj] raw response (truncated): {json.dumps(data)[:500]}")
         return None
+
+    dates = series_data.get("SURVEY_DATES", [])
+    values = series_data.get("VALUES", [])
 
     observations = []
-    for entry in series_list if isinstance(series_list, list) else [series_list]:
-        obs_list = entry.get("OBSERVATIONS") or entry.get("observations") or []
-        for obs in obs_list:
-            date = obs.get("DATE") or obs.get("date") or obs.get("time")
-            value = obs.get("VALUE") or obs.get("value") or obs.get("obs_value")
-            if date and value not in (None, "", "."):
-                date_str = str(date).replace("/", "-")
-                if len(date_str) == 7:
-                    date_str = date_str + "-01"
-                observations.append({"date": date_str, "value": float(value)})
+    for date_raw, value_raw in zip(dates, values):
+        if value_raw in (None, "", "null"):
+            continue
+        date_str = str(date_raw)
+        # Monthly dates come back as YYYYMM; normalize to YYYY-MM-01.
+        if len(date_str) == 6 and date_str.isdigit():
+            date_str = f"{date_str[:4]}-{date_str[4:6]}-01"
+        observations.append({"date": date_str, "value": float(value_raw)})
 
     if not observations:
-        print(f"[boj] no observations parsed for {series_code} -- response may need a different parsing path")
+        print(f"[boj] SURVEY_DATES/VALUES found but produced no usable observations for db={db} code={code}")
         return None
 
     observations.sort(key=lambda r: r["date"])
@@ -312,7 +329,7 @@ def main():
 
         official = existing["official"]
         if indicator == "boj_rate":
-            boj_raw = fetch_boj_series(BOJ_SERIES_CODE, limit=36)
+            boj_raw = fetch_boj_series(BOJ_DB, BOJ_CODE, limit=36)
             if boj_raw is not None:
                 official = boj_raw
         else:
