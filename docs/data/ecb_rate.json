@@ -86,7 +86,7 @@
       "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
       "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
       "implied_probability": 0.805,
-      "volume": 46471.26240800003,
+      "volume": 46478.08240800003,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.5
     },
@@ -99,5 +99,5 @@
       "strike": 2.75
     }
   ],
-  "last_updated": "2026-07-29T14:30:59.212100+00:00"
+  "last_updated": "2026-07-29T15:11:38.729502+00:00"
 }

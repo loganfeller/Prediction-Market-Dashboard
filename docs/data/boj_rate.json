@@ -165,7 +165,7 @@
     {
       "slug": "no-change-in-bank-of-japans-interest-rates-after-the-july-2026-meeting",
       "title": "No change in Bank of Japan\u2019s interest rates after the July 2026 meeting?",
-      "implied_probability": 0.988,
+      "implied_probability": 0.9885,
       "volume": 110472.61083999995,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.841
@@ -174,7 +174,7 @@
       "slug": "bank-of-japan-increases-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan increases interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.01,
-      "volume": 85486.455642,
+      "volume": 85488.372864,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 1.091
     },
@@ -187,5 +187,5 @@
       "strike": 1.341
     }
   ],
-  "last_updated": "2026-07-29T14:30:59.212100+00:00"
+  "last_updated": "2026-07-29T15:11:38.729502+00:00"
 }
