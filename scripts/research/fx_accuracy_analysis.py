@@ -87,11 +87,19 @@ def fetch_closed_finance_events(limit=500, max_pages=20):
 def extract_fx_markets(events):
     """Flatten events into individual markets, keeping only FX-titled ones."""
     fx_markets = []
+    total_markets_seen = 0
+    sample_titles = []
     for event in events:
         for market in event.get("markets", []):
+            total_markets_seen += 1
             title = market.get("question", market.get("slug", ""))
+            if len(sample_titles) < 15:
+                sample_titles.append(title)
             if is_fx_market_title(title):
                 fx_markets.append(market)
+
+    print(f"[fx] total individual markets seen across all events: {total_markets_seen}")
+    print(f"[fx] sample titles seen (up to 15): {sample_titles}")
     return fx_markets
 
 
