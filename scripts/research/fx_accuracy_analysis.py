@@ -39,7 +39,12 @@ import requests
 GAMMA_API_BASE = "https://gamma-api.polymarket.com"
 CLOB_API_BASE = "https://clob.polymarket.com"
 
-FINANCE_TAG_ID = 120  # confirmed via Polymarket public source code
+# Confirmed directly via the Gamma API tags-by-slug lookup (see
+# find_fx_tag_id below) -- the broad parent Finance tag (120) was tried
+# first and confirmed NOT to surface FX-specific content on its own, so
+# these more specific, overlapping FX-related tags are queried instead
+# and the results merged/deduplicated by event id.
+FX_TAG_IDS = [101705, 103636, 897, 102721, 105093, 102719]
 
 # A market counts as FX-related if its title matches any of these patterns.
 # Built from real example titles seen on Polymarket Exchange Rate, Foreign
@@ -66,30 +71,40 @@ def is_fx_market_title(title):
     return any(pattern.search(title) for pattern in FX_TITLE_PATTERNS)
 
 
-def fetch_closed_finance_events(limit=100, max_pages=100):
-    """Page through closed events tagged Finance, return the raw list."""
+def fetch_closed_events_for_tag(tag_id, limit=100, max_pages=100):
+    """Page through closed events for a single tag id, return the raw list."""
     events = []
     offset = 0
     for page_num in range(max_pages):
         params = {
-            "tag_id": FINANCE_TAG_ID,
+            "tag_id": tag_id,
             "closed": "true",
             "limit": limit,
             "offset": offset,
         }
         resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
         if resp.status_code == 422:
-            print(f"[fx] page {page_num}: got 422 at offset {offset} -- API pagination limit reached, stopping here")
+            print(f"[fx] tag {tag_id} page {page_num}: got 422 at offset {offset} -- pagination limit reached, stopping here")
             break
         resp.raise_for_status()
         page = resp.json()
-        print(f"[fx] page {page_num}: fetched {len(page)} events at offset {offset}")
+        print(f"[fx] tag {tag_id} page {page_num}: fetched {len(page)} events at offset {offset}")
         if not page:
             break
         events.extend(page)
         offset += limit
         time.sleep(0.5)
     return events
+
+
+def fetch_closed_fx_events():
+    """Query every FX-related tag id and merge results, deduped by event id."""
+    events_by_id = {}
+    for tag_id in FX_TAG_IDS:
+        events = fetch_closed_events_for_tag(tag_id)
+        for event in events:
+            events_by_id[event.get("id")] = event
+    return list(events_by_id.values())
 
 
 def extract_fx_markets(events):
@@ -255,9 +270,9 @@ def find_fx_tag_id():
 
 def main():
     find_fx_tag_id()
-    print("[fx] fetching closed Finance-tagged events...")
-    events = fetch_closed_finance_events()
-    print(f"[fx] fetched {len(events)} closed Finance events total")
+    print("[fx] fetching closed FX-tagged events across all candidate tags...")
+    events = fetch_closed_fx_events()
+    print(f"[fx] fetched {len(events)} unique closed FX-tagged events total")
 
     fx_markets = extract_fx_markets(events)
     print(f"[fx] {len(fx_markets)} markets matched FX title patterns")
