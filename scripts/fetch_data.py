@@ -1,7 +1,7 @@
 """
 Fetches official indicator data (FRED) and prediction-market-implied data
-(Polymarket) for three indicators: headline CPI (YoY), the Fed funds rate,
-and the ECB deposit facility rate.
+(Polymarket) for four indicators: headline CPI (YoY), the Fed funds rate,
+the ECB deposit facility rate, and the Bank of Japan policy rate.
 
 Writes plain JSON files to /docs/data that the static frontend reads directly.
 Designed to run on a schedule via GitHub Actions (see .github/workflows/fetch-data.yml).
@@ -14,20 +14,21 @@ Required environment variable (set as a GitHub Actions secret):
 
 Polymarket needs no credentials at all for reading market data.
 
-NOTE on FRED series frequency: CPIAUCSL and FEDFUNDS are MONTHLY series, so
-pulling the most recent N observations gives N months of history. ECBDFR is
-a DAILY series -- pulling N observations there gives only N days. To keep
-the ECB chart comparable to the other two, we pull a larger daily window and
-collapse it to one observation per month.
+NOTE on FRED series frequency: CPIAUCSL, FEDFUNDS, and IRSTCB01JPM156N are
+MONTHLY series, so pulling the most recent N observations gives N months of
+history. ECBDFR is a DAILY series -- pulling N observations there gives only
+N days. To keep the ECB chart comparable to the others, we pull a larger
+daily window and collapse it to one observation per month.
 
-NOTE on rate-decision markets: Fed and ECB rate-decision events on Polymarket
-are structured as several yes/no questions per meeting, e.g. "Will the ECB
-announce a 25 bps increase at the September 2026 meeting?" rather than a
-single number. To compute a market-implied expected RATE (not just a set of
-probabilities), we parse the bps change out of each question's title and
-add it to the most recent official rate reading, then attach that as each
-row's numeric "strike" -- which the frontend already knows how to turn into
-a probability-weighted expected value.
+NOTE on rate-decision markets: Fed/ECB/BOJ rate-decision events on Polymarket
+are structured as several yes/no questions per meeting (e.g. "Will the ECB
+announce a 25 bps increase..." or "Will the Fed decrease interest rates by
+25 bps..." -- note the direction word can appear either before or after
+"bps" depending on the exact phrasing). To compute a market-implied expected
+RATE (not just a set of probabilities), we parse the bps change out of each
+question's title and add it to the most recent official rate reading, then
+attach that as each row's numeric "strike" -- which the frontend already
+knows how to turn into a probability-weighted expected value.
 """
 
 import json
@@ -67,7 +68,7 @@ POLYMARKET_SLUGS = {
     "fed_rate": [
         "fed-decision-in-july-181",
     ],
-   "ecb_rate": [
+    "ecb_rate": [
         "ecb-interest-rates-september-2026-20260616222636097",
     ],
     "boj_rate": [
@@ -77,11 +78,6 @@ POLYMARKET_SLUGS = {
 
 GAMMA_API_BASE = "https://gamma-api.polymarket.com"
 FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
-
-# Matches e.g. "25 bps increase", "50+ bps decrease". The "+" in "50+" (meaning
-# "50 or more") is treated as exactly 50 for this calculation -- a deliberate
-# simplification, since the open-ended tail bracket has no single exact value.
-BPS_PATTERN = re.compile(r"(\d+)\+?\s*bps\s*(increase|decrease)", re.IGNORECASE)
 
 
 def fetch_fred_series(series_id, limit=36):
@@ -135,7 +131,7 @@ def parse_bps_change(title):
     """
     Extract a signed basis-point change from a rate-decision market title.
     Order-independent: matches both "25 bps increase" (ECB phrasing) and
-    "decrease interest rates by 25 bps" (Fed phrasing). Returns 0 for
+    "decrease interest rates by 25 bps" (Fed/BOJ phrasing). Returns 0 for
     "no change", a signed int otherwise, or None if nothing matches.
     """
     if not title:
@@ -146,9 +142,9 @@ def parse_bps_change(title):
     if not bps_match:
         return None
     bps = int(bps_match.group(1))
-    if re.search(r"\bdecrease\b", title, re.IGNORECASE):
+    if re.search(r"\bdecrease", title, re.IGNORECASE):
         return -bps
-    if re.search(r"\bincrease\b", title, re.IGNORECASE):
+    if re.search(r"\bincrease", title, re.IGNORECASE):
         return bps
     return None
 
@@ -258,7 +254,7 @@ def main():
                 official = fred_raw
 
         market = existing["market"]
-       if indicator in ("fed_rate", "ecb_rate", "boj_rate"):
+        if indicator in ("fed_rate", "ecb_rate", "boj_rate"):
             baseline_rate = official[-1]["value"] if official else None
             poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0], baseline_rate=baseline_rate)
         else:
