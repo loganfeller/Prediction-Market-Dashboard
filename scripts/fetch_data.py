@@ -1,13 +1,13 @@
 """
-Fetches official indicator data (FRED + Bank of Japan) and prediction-
+Fetches official indicator data (FRED plus Bank of Japan) and prediction-
 market-implied data (Polymarket) for four indicators: headline CPI (YoY),
 the Fed funds rate, the ECB deposit facility rate, and the BOJ policy rate.
 
 Writes plain JSON files to /docs/data that the static frontend reads directly.
 Designed to run on a schedule via GitHub Actions (see .github/workflows/fetch-data.yml).
 
-Polymarket's Gamma API is fully public and read-only for market data -- no
-API key needed. The Bank of Japan's own Time-Series Data Search API is also
+The Polymarket Gamma API is fully public and read-only for market data --
+no API key needed. The Bank of Japan Time-Series Data Search API is also
 fully public and needs no key.
 
 Required environment variable (set as a GitHub Actions secret):
@@ -19,23 +19,24 @@ a DAILY series -- pulling N observations there gives only N days. To keep
 the ECB chart comparable to the others, we pull a larger daily window and
 collapse it to one observation per month.
 
-NOTE on the BOJ policy rate: FRED's international series for Japan's policy
-rate (tried IRSTCB01JPM156N, then INTDSRJPM193N) both turned out to be
-stale/discontinued despite appearing current on FRED's own pages. The BOJ's
-own official API (launched publicly in Feb 2026) is used instead as the
-primary source. Series code FM02'STRACLUCON ("Call Rate, Uncollateralized
-Overnight/Average") was confirmed live through April 2026 directly on the
-BOJ's statistics site.
+NOTE on the BOJ policy rate: FRED international series for Japan policy rate
+(tried IRSTCB01JPM156N, then INTDSRJPM193N) both turned out to be stale or
+discontinued despite appearing current on FRED own pages. The BOJ own
+official API (launched publicly in Feb 2026) is used instead as the primary
+source. The series code used (built below without a literal apostrophe
+character, to avoid smart-quote corruption on copy/paste) refers to
+"Call Rate, Uncollateralized Overnight, Average" and was confirmed live
+through April 2026 directly on the BOJ statistics site.
 
-NOTE on rate-decision markets: Fed/ECB/BOJ rate-decision events on Polymarket
-are structured as several yes/no questions per meeting (e.g. "Will the ECB
-announce a 25 bps increase..." or "Will the Fed decrease interest rates by
-25 bps..." -- the direction word can appear either before or after "bps"
-depending on phrasing). To compute a market-implied expected RATE (not just
-a set of probabilities), we parse the bps change out of each question's
-title and add it to the most recent official rate reading, then attach that
-as each row's numeric "strike" -- which the frontend already knows how to
-turn into a probability-weighted expected value.
+NOTE on rate-decision markets: Fed, ECB, and BOJ rate-decision events on
+Polymarket are structured as several yes/no questions per meeting (e.g.
+"Will the ECB announce a 25 bps increase..." or "Will the Fed decrease
+interest rates by 25 bps..." -- the direction word can appear either before
+or after "bps" depending on phrasing). To compute a market-implied expected
+RATE (not just a set of probabilities), we parse the bps change out of each
+question title and add it to the most recent official rate reading, then
+attach that as each row numeric "strike" field -- which the frontend already
+knows how to turn into a probability-weighted expected value.
 """
 
 import json
@@ -61,10 +62,14 @@ FRED_FETCH_LIMIT = {
     "ecb_rate": 400,
 }
 
-# BOJ policy rate is fetched separately, from the Bank of Japan's own API
-# (see module docstring for why).
+# BOJ policy rate is fetched separately, from the Bank of Japan own API.
+# The real series code contains a literal apostrophe character between FM02
+# and STRACLUCON. It is built here with chr(39) instead of typing that
+# character directly, since a stray apostrophe in this file has repeatedly
+# been corrupted into a curly quote during copy and paste, which breaks
+# Python string parsing.
 BOJ_API_BASE = "https://www.stat-search.boj.or.jp/api/v1"
-BOJ_SERIES_CODE = "FM02'STRACLUCON"  # Call Rate, Uncollateralized Overnight/Average
+BOJ_SERIES_CODE = "FM02" + chr(39) + "STRACLUCON"
 
 POLYMARKET_SLUGS = {
     "cpi": [
@@ -91,7 +96,7 @@ FRED_API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 
 def fetch_fred_series(series_id, limit=36):
-    """Pull the most recent `limit` observations for a FRED series."""
+    """Pull the most recent limit observations for a FRED series."""
     if not FRED_API_KEY:
         print(f"[fred] no FRED_API_KEY set, skipping {series_id}")
         return None
@@ -116,5 +121,225 @@ def fetch_fred_series(series_id, limit=36):
 
 def fetch_boj_series(series_code, limit=36):
     """
-    Pull the most recent `limit` monthly observations for a BOJ series via
-    the Bank of Japan's own
+    Pull the most recent limit monthly observations for a BOJ series via
+    the Bank of Japan own public API. No API key needed.
+
+    NOTE: this endpoint and response format are newer and less thoroughly
+    documented than FRED -- if this comes back empty or errors, print the
+    raw response for debugging rather than failing silently, since the exact
+    parameter names or response shape may need adjustment.
+    """
+    params = {
+        "code": series_code,
+        "format": "json",
+    }
+    try:
+        resp = requests.get(f"{BOJ_API_BASE}/getDataCode", params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception as e:
+        print(f"[boj] request failed for series {series_code}: {e}")
+        return None
+
+    series_list = None
+    if isinstance(data, dict):
+        for key in ("SERIES", "series", "GO_RESULT", "data"):
+            if key in data:
+                series_list = data[key]
+                break
+    if series_list is None:
+        print(f"[boj] unrecognized response shape for {series_code}: keys={list(data.keys()) if isinstance(data, dict) else type(data)}")
+        return None
+
+    observations = []
+    for entry in series_list if isinstance(series_list, list) else [series_list]:
+        obs_list = entry.get("OBSERVATIONS") or entry.get("observations") or []
+        for obs in obs_list:
+            date = obs.get("DATE") or obs.get("date") or obs.get("time")
+            value = obs.get("VALUE") or obs.get("value") or obs.get("obs_value")
+            if date and value not in (None, "", "."):
+                date_str = str(date).replace("/", "-")
+                if len(date_str) == 7:
+                    date_str = date_str + "-01"
+                observations.append({"date": date_str, "value": float(value)})
+
+    if not observations:
+        print(f"[boj] no observations parsed for {series_code} -- response may need a different parsing path")
+        return None
+
+    observations.sort(key=lambda r: r["date"])
+    return observations[-limit:]
+
+
+def cpi_yoy_from_index(index_series):
+    """Convert a monthly CPI index series into year-over-year percent change."""
+    by_date = {row["date"]: row["value"] for row in index_series}
+    dates = sorted(by_date.keys())
+    out = []
+    for d in dates:
+        year, month, day = d.split("-")
+        prior_year_date = f"{int(year) - 1}-{month}-{day}"
+        if prior_year_date in by_date:
+            pct = (by_date[d] / by_date[prior_year_date] - 1) * 100
+            out.append({"date": d, "value": round(pct, 2)})
+    return out
+
+
+def last_observation_per_month(series):
+    """Collapse a daily series down to one observation per calendar month."""
+    by_month = {}
+    for row in series:
+        month_key = row["date"][:7]
+        by_month[month_key] = row
+    return [by_month[key] for key in sorted(by_month.keys())]
+
+
+def parse_bps_change(title):
+    """
+    Extract a signed basis-point change from a rate-decision market title.
+    Order-independent: matches both "25 bps increase" (ECB phrasing) and
+    "decrease interest rates by 25 bps" (Fed and BOJ phrasing). Returns 0
+    for "no change", a signed int otherwise, or None if nothing matches.
+    """
+    if not title:
+        return None
+    if re.search(r"no change", title, re.IGNORECASE):
+        return 0
+    bps_match = re.search(r"(\d+)\+?\s*bps", title, re.IGNORECASE)
+    if not bps_match:
+        return None
+    bps = int(bps_match.group(1))
+    if re.search(r"\bdecrease", title, re.IGNORECASE):
+        return -bps
+    if re.search(r"\bincrease", title, re.IGNORECASE):
+        return bps
+    return None
+
+
+def fetch_polymarket_market(slug):
+    """Fetch a single Polymarket market by slug. No authentication needed."""
+    resp = requests.get(f"{GAMMA_API_BASE}/markets", params={"slug": slug}, timeout=30)
+    resp.raise_for_status()
+    results = resp.json()
+    if not results:
+        print(f"[polymarket] no market found for slug {slug} -- may need updating")
+        return None
+    return results[0]
+
+
+def fetch_polymarket_event_markets(event_slug):
+    """Fetch an EVENT by slug and return its underlying markets."""
+    resp = requests.get(f"{GAMMA_API_BASE}/events", params={"slug": event_slug}, timeout=30)
+    resp.raise_for_status()
+    results = resp.json()
+    if not results:
+        print(f"[polymarket] no event found for slug {event_slug} -- may need updating")
+        return []
+    return results[0].get("markets", [])
+
+
+def parse_market_to_row(market, baseline_rate=None):
+    """
+    Extract the fields the frontend needs from a raw Gamma API market object.
+    If baseline_rate is given, also attempts to attach a numeric strike
+    field -- the implied rate level if this outcome resolves -- by parsing
+    a bps change out of the market title.
+    """
+    prices = json.loads(market.get("outcomePrices", "[]"))
+    yes_price = float(prices[0]) if prices else None
+    title = market.get("question", market.get("slug"))
+
+    row = {
+        "slug": market.get("slug"),
+        "title": title,
+        "implied_probability": round(yes_price, 4) if yes_price is not None else None,
+        "volume": float(market.get("volume", 0) or 0),
+        "close_time": market.get("endDate"),
+    }
+
+    if baseline_rate is not None:
+        bps_change = parse_bps_change(title)
+        if bps_change is not None:
+            row["strike"] = round(baseline_rate + bps_change / 100, 4)
+
+    return row
+
+
+def fetch_polymarket_markets(slugs):
+    rows = []
+    for slug in slugs:
+        market = fetch_polymarket_market(slug)
+        if market is None:
+            continue
+        row = parse_market_to_row(market)
+        if row["implied_probability"] is not None:
+            rows.append(row)
+    return rows if rows else None
+
+
+def fetch_polymarket_event(event_slug, baseline_rate=None):
+    """Fetch all markets under an event slug and convert each to a row."""
+    markets = fetch_polymarket_event_markets(event_slug)
+    rows = []
+    for market in markets:
+        row = parse_market_to_row(market, baseline_rate=baseline_rate)
+        if row["implied_probability"] is not None:
+            rows.append(row)
+    return rows if rows else None
+
+
+def load_existing(name):
+    path = os.path.join(DATA_DIR, f"{name}.json")
+    if os.path.exists(path):
+        with open(path) as f:
+            return json.load(f)
+    return {"official": [], "market": [], "last_updated": None}
+
+
+def write_json(name, payload):
+    path = os.path.join(DATA_DIR, f"{name}.json")
+    with open(path, "w") as f:
+        json.dump(payload, f, indent=2)
+    print(f"[write] {path}")
+
+
+def main():
+    os.makedirs(DATA_DIR, exist_ok=True)
+    now = datetime.now(timezone.utc).isoformat()
+
+    for indicator in ("cpi", "fed_rate", "ecb_rate", "boj_rate"):
+        existing = load_existing(indicator)
+
+        official = existing["official"]
+        if indicator == "boj_rate":
+            boj_raw = fetch_boj_series(BOJ_SERIES_CODE, limit=36)
+            if boj_raw is not None:
+                official = boj_raw
+        else:
+            fred_raw = fetch_fred_series(FRED_SERIES[indicator], limit=FRED_FETCH_LIMIT[indicator])
+            if fred_raw is not None:
+                if indicator == "cpi":
+                    official = cpi_yoy_from_index(fred_raw)
+                elif indicator == "ecb_rate":
+                    official = last_observation_per_month(fred_raw)
+                else:
+                    official = fred_raw
+
+        market = existing["market"]
+        if indicator in ("fed_rate", "ecb_rate", "boj_rate"):
+            baseline_rate = official[-1]["value"] if official else None
+            poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0], baseline_rate=baseline_rate)
+        else:
+            poly_rows = fetch_polymarket_markets(POLYMARKET_SLUGS[indicator])
+        if poly_rows is not None:
+            market = poly_rows
+
+        write_json(indicator, {
+            "official": official,
+            "market": market,
+            "last_updated": now,
+        })
+
+
+if __name__ == "__main__":
+    main()
