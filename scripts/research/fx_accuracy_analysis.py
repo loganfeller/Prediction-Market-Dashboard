@@ -80,7 +80,14 @@ def fetch_closed_finance_events(limit=100, max_pages=100):
             "limit": limit,
             "offset": offset,
         }
-        resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
+     resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
+        if resp.status_code == 422:
+            # The API appears to enforce a hard cap on how deep offset-based
+            # pagination can go. This is expected to eventually happen, not
+            # a bug -- treat it as "no more pages available" and stop here
+            # with whatever has been collected so far.
+            print(f"[fx] page {page_num}: got 422 at offset {offset} -- API pagination limit reached, stopping here")
+            break
         resp.raise_for_status()
         page = resp.json()
         print(f"[fx] page {page_num}: fetched {len(page)} events at offset {offset}")
