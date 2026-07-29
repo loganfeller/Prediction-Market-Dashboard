@@ -3,6 +3,9 @@ name: FX accuracy research analysis
 on:
   workflow_dispatch: {}  # manual trigger only -- this is a one-off/occasional analysis, not a daily job
 
+permissions:
+  contents: write
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
