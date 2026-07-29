@@ -154,7 +154,7 @@ def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK
     start_ts = int(target_time.timestamp())
     end_ts = int((target_time + timedelta(hours=12)).timestamp())
 
-params = {
+    params = {
         "market": clob_token_id,
         "startTs": start_ts,
         "endTs": end_ts,
@@ -195,109 +195,3 @@ def analyze_market(market):
     except (ValueError, TypeError):
         clob_token_ids = []
     if not clob_token_ids:
-        return None
-
-    price_at_lookback = get_price_at_lookback(clob_token_ids[0], resolution_time)
-    if price_at_lookback is None:
-        return None
-
-    predicted_yes = price_at_lookback >= 0.5
-    actual_yes = outcome >= 0.5
-    correct = predicted_yes == actual_yes
-
-    return {
-        "slug": market.get("slug"),
-        "title": title,
-        "resolution_time": resolution_time.isoformat(),
-        "outcome": outcome,
-        "implied_probability_at_lookback": round(price_at_lookback, 4),
-        "modal_side_correct": correct,
-    }
-
-
-def summarize(results):
-    """Overall accuracy plus a simple calibration-by-price-bucket table."""
-    if not results:
-        return {"overall_accuracy": None, "n": 0, "buckets": {}}
-
-    n_correct = sum(1 for r in results if r["modal_side_correct"])
-    overall_accuracy = n_correct / len(results)
-
-    buckets = {}
-    for r in results:
-        p = r["implied_probability_at_lookback"]
-        bucket_key = f"{int(p * 10) * 10}-{int(p * 10) * 10 + 10}"
-        bucket = buckets.setdefault(bucket_key, {"n": 0, "n_resolved_yes": 0})
-        bucket["n"] += 1
-        if r["outcome"] >= 0.5:
-            bucket["n_resolved_yes"] += 1
-
-    for bucket in buckets.values():
-        bucket["resolved_yes_rate"] = round(bucket["n_resolved_yes"] / bucket["n"], 4)
-
-    return {
-        "overall_accuracy": round(overall_accuracy, 4),
-        "n": len(results),
-        "buckets": buckets,
-    }
-
-
-def find_fx_tag_id():
-    """
-    One-time diagnostic: look up several candidate tag slugs directly via
-    the Gamma API tags-by-slug endpoint, to find the real numeric tag ID
-    for FX/currency markets rather than guessing parameter combinations
-    against the broad parent Finance tag (120), which was confirmed NOT
-    to surface FX content on its own.
-    """
-    candidate_slugs = [
-        "forex", "foreign-exchange", "currency", "currencies",
-        "exchange-rate", "exchange-rates", "fx", "dollar",
-    ]
-    for slug in candidate_slugs:
-        try:
-            resp = requests.get(f"{GAMMA_API_BASE}/tags/slug/{slug}", timeout=15)
-            if resp.status_code == 200:
-                tag = resp.json()
-                tag_id = tag.get("id")
-                tag_label = tag.get("label")
-                print(f"[fx] FOUND tag for slug {slug}: id={tag_id} label={tag_label}")
-            else:
-                print(f"[fx] slug {slug} -> status {resp.status_code}")
-        except Exception as e:
-            print(f"[fx] slug {slug} -> request failed: {e}")
-        time.sleep(0.3)
-
-
-def main():
-    find_fx_tag_id()
-    print("[fx] fetching closed FX-tagged events across all candidate tags...")
-    events = fetch_closed_fx_events()
-    print(f"[fx] fetched {len(events)} unique closed FX-tagged events total")
-
-    fx_markets = extract_fx_markets(events)
-    print(f"[fx] {len(fx_markets)} markets matched FX title patterns")
-
-    results = []
-    for market in fx_markets:
-        row = analyze_market(market)
-        if row is not None:
-            results.append(row)
-        time.sleep(0.3)
-
-    print(f"[fx] successfully analyzed {len(results)} markets")
-
-    output = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "lookback_days": LOOKBACK_DAYS,
-        "summary": summarize(results),
-        "markets": results,
-    }
-
-    with open(OUTPUT_PATH, "w") as f:
-        json.dump(output, f, indent=2)
-    print(f"[fx] wrote {OUTPUT_PATH}")
-
-
-if __name__ == "__main__":
-    main()
