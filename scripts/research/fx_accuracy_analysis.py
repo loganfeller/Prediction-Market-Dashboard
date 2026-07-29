@@ -60,11 +60,20 @@ def is_fx_market_title(title):
     return any(pattern.search(title) for pattern in FX_TITLE_PATTERNS)
 
 
-def fetch_closed_finance_events(limit=500, max_pages=20):
-    """Page through closed events tagged Finance, return the raw list."""
+def fetch_closed_finance_events(limit=100, max_pages=100):
+    """
+    Page through closed events tagged Finance, return the raw list.
+
+    NOTE: the Gamma API appears to cap page size at 100 regardless of the
+    limit requested (confirmed empirically -- requesting 500 still returned
+    only 100). This loop therefore keeps paging until an actually EMPTY
+    page is returned, rather than stopping as soon as a page comes back
+    smaller than the requested limit, which would stop after page 1 every
+    time and silently miss everything beyond the first 100 events.
+    """
     events = []
     offset = 0
-    for _ in range(max_pages):
+    for page_num in range(max_pages):
         params = {
             "tag_id": FINANCE_TAG_ID,
             "closed": "true",
@@ -74,11 +83,10 @@ def fetch_closed_finance_events(limit=500, max_pages=20):
         resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
         resp.raise_for_status()
         page = resp.json()
+        print(f"[fx] page {page_num}: fetched {len(page)} events at offset {offset}")
         if not page:
             break
         events.extend(page)
-        if len(page) < limit:
-            break
         offset += limit
         time.sleep(0.5)  # be polite to the API between pages
     return events
