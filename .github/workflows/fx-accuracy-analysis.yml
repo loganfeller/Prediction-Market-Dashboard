@@ -1,0 +1,29 @@
+name: FX accuracy research analysis
+
+on:
+  workflow_dispatch: {}  # manual trigger only -- this is a one-off/occasional analysis, not a daily job
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run FX accuracy analysis
+        working-directory: scripts/research
+        run: python fx_accuracy_analysis.py
+
+      - name: Commit results
+        run: |
+          git config user.name "indicator-tracker-bot"
+          git config user.email "actions@github.com"
+          git add scripts/research/fx_accuracy_results.json
+          git diff --quiet --cached || git commit -m "Add FX accuracy analysis results $(date -u +%Y-%m-%d)"
+          git push
