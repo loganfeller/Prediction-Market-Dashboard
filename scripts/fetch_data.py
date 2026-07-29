@@ -46,9 +46,8 @@ FRED_SERIES = {
     "cpi": "CPIAUCSL",
     "fed_rate": "FEDFUNDS",
     "ecb_rate": "ECBDFR",
-    "boj_rate": "IRSTCB01JPM156N",
+    "boj_rate": "INTDSRJPM193N",
 }
-
 FRED_FETCH_LIMIT = {
     "cpi": 36,
     "fed_rate": 36,
