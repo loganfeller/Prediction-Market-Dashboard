@@ -45,12 +45,14 @@ FRED_SERIES = {
     "cpi": "CPIAUCSL",
     "fed_rate": "FEDFUNDS",
     "ecb_rate": "ECBDFR",
+    "boj_rate": "IRSTCB01JPM156N",
 }
 
 FRED_FETCH_LIMIT = {
     "cpi": 36,
     "fed_rate": 36,
     "ecb_rate": 400,
+    "boj_rate": 36,
 }
 
 POLYMARKET_SLUGS = {
@@ -65,8 +67,11 @@ POLYMARKET_SLUGS = {
     "fed_rate": [
         "fed-decision-in-july-181",
     ],
-    "ecb_rate": [
+   "ecb_rate": [
         "ecb-interest-rates-september-2026-20260616222636097",
+    ],
+    "boj_rate": [
+        "bank-of-japan-decision-in-july-659",
     ],
 }
 
@@ -239,7 +244,7 @@ def main():
     os.makedirs(DATA_DIR, exist_ok=True)
     now = datetime.now(timezone.utc).isoformat()
 
-    for indicator in ("cpi", "fed_rate", "ecb_rate"):
+    for indicator in ("cpi", "fed_rate", "ecb_rate", "boj_rate"):
         existing = load_existing(indicator)
 
         official = existing["official"]
@@ -253,7 +258,7 @@ def main():
                 official = fred_raw
 
         market = existing["market"]
-        if indicator in ("fed_rate", "ecb_rate"):
+       if indicator in ("fed_rate", "ecb_rate", "boj_rate"):
             baseline_rate = official[-1]["value"] if official else None
             poly_rows = fetch_polymarket_event(POLYMARKET_SLUGS[indicator][0], baseline_rate=baseline_rate)
         else:
