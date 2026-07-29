@@ -1,148 +1,148 @@
 {
   "official": [
     {
-      "date": "2014-05-01",
-      "value": 0.3
+      "date": "2023-07-01",
+      "value": -0.046
     },
     {
-      "date": "2014-06-01",
-      "value": 0.3
+      "date": "2023-08-01",
+      "value": -0.063
     },
     {
-      "date": "2014-07-01",
-      "value": 0.3
+      "date": "2023-09-01",
+      "value": -0.054
     },
     {
-      "date": "2014-08-01",
-      "value": 0.3
+      "date": "2023-10-01",
+      "value": -0.02
     },
     {
-      "date": "2014-09-01",
-      "value": 0.3
+      "date": "2023-11-01",
+      "value": -0.015
     },
     {
-      "date": "2014-10-01",
-      "value": 0.3
+      "date": "2023-12-01",
+      "value": -0.012
     },
     {
-      "date": "2014-11-01",
-      "value": 0.3
+      "date": "2024-01-01",
+      "value": -0.014
     },
     {
-      "date": "2014-12-01",
-      "value": 0.3
+      "date": "2024-02-01",
+      "value": -0.006
     },
     {
-      "date": "2015-01-01",
-      "value": 0.3
+      "date": "2024-03-01",
+      "value": 0.022
     },
     {
-      "date": "2015-02-01",
-      "value": 0.3
+      "date": "2024-04-01",
+      "value": 0.077
     },
     {
-      "date": "2015-03-01",
-      "value": 0.3
+      "date": "2024-05-01",
+      "value": 0.077
     },
     {
-      "date": "2015-04-01",
-      "value": 0.3
+      "date": "2024-06-01",
+      "value": 0.077
     },
     {
-      "date": "2015-05-01",
-      "value": 0.3
+      "date": "2024-07-01",
+      "value": 0.078
     },
     {
-      "date": "2015-06-01",
-      "value": 0.3
+      "date": "2024-08-01",
+      "value": 0.227
     },
     {
-      "date": "2015-07-01",
-      "value": 0.3
+      "date": "2024-09-01",
+      "value": 0.227
     },
     {
-      "date": "2015-08-01",
-      "value": 0.3
+      "date": "2024-10-01",
+      "value": 0.227
     },
     {
-      "date": "2015-09-01",
-      "value": 0.3
+      "date": "2024-11-01",
+      "value": 0.227
     },
     {
-      "date": "2015-10-01",
-      "value": 0.3
+      "date": "2024-12-01",
+      "value": 0.227
     },
     {
-      "date": "2015-11-01",
-      "value": 0.3
+      "date": "2025-01-01",
+      "value": 0.293
     },
     {
-      "date": "2015-12-01",
-      "value": 0.3
+      "date": "2025-02-01",
+      "value": 0.478
     },
     {
-      "date": "2016-01-01",
-      "value": 0.3
+      "date": "2025-03-01",
+      "value": 0.477
     },
     {
-      "date": "2016-02-01",
-      "value": 0.3
+      "date": "2025-04-01",
+      "value": 0.477
     },
     {
-      "date": "2016-03-01",
-      "value": 0.3
+      "date": "2025-05-01",
+      "value": 0.477
     },
     {
-      "date": "2016-04-01",
-      "value": 0.3
+      "date": "2025-06-01",
+      "value": 0.477
     },
     {
-      "date": "2016-05-01",
-      "value": 0.3
+      "date": "2025-07-01",
+      "value": 0.478
     },
     {
-      "date": "2016-06-01",
-      "value": 0.3
+      "date": "2025-08-01",
+      "value": 0.477
     },
     {
-      "date": "2016-07-01",
-      "value": 0.3
+      "date": "2025-09-01",
+      "value": 0.477
     },
     {
-      "date": "2016-08-01",
-      "value": 0.3
+      "date": "2025-10-01",
+      "value": 0.477
     },
     {
-      "date": "2016-09-01",
-      "value": 0.3
+      "date": "2025-11-01",
+      "value": 0.478
     },
     {
-      "date": "2016-10-01",
-      "value": 0.3
+      "date": "2025-12-01",
+      "value": 0.557
     },
     {
-      "date": "2016-11-01",
-      "value": 0.3
+      "date": "2026-01-01",
+      "value": 0.728
     },
     {
-      "date": "2016-12-01",
-      "value": 0.3
+      "date": "2026-02-01",
+      "value": 0.728
     },
     {
-      "date": "2017-01-01",
-      "value": 0.3
+      "date": "2026-03-01",
+      "value": 0.728
     },
     {
-      "date": "2017-02-01",
-      "value": 0.3
+      "date": "2026-04-01",
+      "value": 0.727
     },
     {
-      "date": "2017-03-01",
-      "value": 0.3
+      "date": "2026-05-01",
+      "value": 0.727
     },
     {
-      "date": "2017-04-01",
-      "value": 0.3
+      "date": "2026-06-01",
+      "value": 0.841
     }
   ],
   "market": [
@@ -152,7 +152,7 @@
       "implied_probability": 0.0005,
       "volume": 32205.849275999986,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": -0.2
+      "strike": 0.341
     },
     {
       "slug": "bank-of-japan-decreases-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -160,7 +160,7 @@
       "implied_probability": 0.0005,
       "volume": 44672.912466999995,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.05
+      "strike": 0.591
     },
     {
       "slug": "no-change-in-bank-of-japans-interest-rates-after-the-july-2026-meeting",
@@ -168,7 +168,7 @@
       "implied_probability": 0.988,
       "volume": 110472.61083999995,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.3
+      "strike": 0.841
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -176,7 +176,7 @@
       "implied_probability": 0.01,
       "volume": 85486.455642,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.55
+      "strike": 1.091
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-50-bps-after-the-july-2026-meeting",
@@ -184,8 +184,8 @@
       "implied_probability": 0.0045,
       "volume": 99646.09879600002,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.8
+      "strike": 1.341
     }
   ],
-  "last_updated": "2026-07-29T14:26:32.137797+00:00"
+  "last_updated": "2026-07-29T14:30:59.212100+00:00"
 }
