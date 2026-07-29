@@ -154,10 +154,11 @@ def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK
     start_ts = int(target_time.timestamp())
     end_ts = int((target_time + timedelta(hours=12)).timestamp())
 
-    params = {
+params = {
         "market": clob_token_id,
         "startTs": start_ts,
         "endTs": end_ts,
+        "interval": "max",  # required alongside startTs/endTs per working examples
         "fidelity": 60,
     }
     try:
