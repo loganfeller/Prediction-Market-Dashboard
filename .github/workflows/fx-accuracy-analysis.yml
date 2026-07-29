@@ -21,7 +21,7 @@ jobs:
 
       - name: Run FX accuracy analysis
         working-directory: scripts/research
-        run: python fx_accuracy_analysis.py
+        run: python -u fx_accuracy_analysis.py
 
       - name: Commit results
         run: |
