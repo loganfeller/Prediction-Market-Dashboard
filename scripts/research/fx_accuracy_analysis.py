@@ -162,7 +162,7 @@ def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK
         "fidelity": 60,
     }
     try:
-        resp = requests.get(f"{CLOB_API_BASE}/prices-history", params=params, timeout=30)
+        resp = requests.get(f"{CLOB_API_BASE}/prices-history", params=params, timeout=10)
         resp.raise_for_status()
         history = resp.json().get("history", [])
     except Exception as e:
@@ -268,6 +268,7 @@ def find_fx_tag_id():
             print(f"[fx] slug {slug} -> request failed: {e}")
         time.sleep(0.3)
 
+
 def main():
     find_fx_tag_id()
     print("[fx] fetching closed FX-tagged events across all candidate tags...")
@@ -277,26 +278,22 @@ def main():
     fx_markets = extract_fx_markets(events)
     print(f"[fx] {len(fx_markets)} markets matched FX title patterns")
 
+    # TEMPORARY: cap to a small test batch while we confirm the CLOB request
+    # actually works and is not silently hanging. Raise or remove this once
+    # a small batch completes quickly and cleanly.
+    MAX_MARKETS_TO_TEST = 30
+    markets_to_analyze = fx_markets[:MAX_MARKETS_TO_TEST]
+    print(f"[fx] testing on first {len(markets_to_analyze)} of {len(fx_markets)} matched markets")
+
     results = []
-    for market in fx_markets:
+    for i, market in enumerate(markets_to_analyze):
+        title = market.get("question", market.get("slug", ""))
+        print(f"[fx] ({i + 1}/{len(markets_to_analyze)}) analyzing: {title}")
         row = analyze_market(market)
         if row is not None:
+            ip = row["implied_probability_at_lookback"]
+            oc = row["outcome"]
+            print(f"[fx]   -> got result: implied_probability={ip} outcome={oc}")
             results.append(row)
-        time.sleep(0.3)
-
-    print(f"[fx] successfully analyzed {len(results)} markets")
-
-    output = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "lookback_days": LOOKBACK_DAYS,
-        "summary": summarize(results),
-        "markets": results,
-    }
-
-    with open(OUTPUT_PATH, "w") as f:
-        json.dump(output, f, indent=2)
-    print(f"[fx] wrote {OUTPUT_PATH}")
-
-
-if __name__ == "__main__":
-    main()
+        else:
+            print("[fx]   -> no usable result (see any error above)")
