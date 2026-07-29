@@ -19,8 +19,14 @@ Two separate Polymarket APIs are used:
 Output: a JSON file (fx_accuracy_results.json) with one row per market
 analyzed (title, resolution, price at the lookback window, and whether
 the modal side was correct), plus summary calibration buckets, written to
-the same folder as this script. A companion chart is left for a follow-up
-step once the raw numbers are in hand.
+the same folder as this script.
+
+NOTE on pagination: the Gamma API appears to cap page size at 100 events
+regardless of the limit requested, and also enforces a hard limit on how
+deep offset-based pagination can go (a 422 response), observed empirically
+around offset 2100. The fetch loop below accounts for both: it keeps
+paging until it gets an actually empty page OR a 422, rather than stopping
+as soon as a page comes back smaller than requested.
 """
 
 import json
@@ -36,8 +42,8 @@ CLOB_API_BASE = "https://clob.polymarket.com"
 FINANCE_TAG_ID = 120  # confirmed via Polymarket public source code
 
 # A market counts as FX-related if its title matches any of these patterns.
-# Built from real example titles seen on Polymarket's Exchange Rate /
-# Foreign Exchange / Currency category pages, e.g. "Will EUR/USD hit __ in
+# Built from real example titles seen on Polymarket Exchange Rate, Foreign
+# Exchange, and Currency category pages, e.g. "Will EUR/USD hit __ in
 # 2026?", "Will USD/JPY hit __ in 2026?", "Argentina Official USD Exchange
 # Rate end of 2026?".
 FX_TITLE_PATTERNS = [
@@ -46,9 +52,9 @@ FX_TITLE_PATTERNS = [
     re.compile(r"\bUSD\b.*\b(rial|rupee|won|real|peso|yen)\b", re.IGNORECASE),
 ]
 
-# How long before resolution to check the market's implied price. Chosen to
-# let a direct comparison against Polymarket own "accurate more than 94% of
-# the time a month before" claim.
+# How long before resolution to check the market implied price. Chosen to
+# allow a direct comparison against Polymarket own "accurate more than 94%
+# of the time a month before" claim.
 LOOKBACK_DAYS = 30
 
 OUTPUT_PATH = "fx_accuracy_results.json"
@@ -61,16 +67,7 @@ def is_fx_market_title(title):
 
 
 def fetch_closed_finance_events(limit=100, max_pages=100):
-    """
-    Page through closed events tagged Finance, return the raw list.
-
-    NOTE: the Gamma API appears to cap page size at 100 regardless of the
-    limit requested (confirmed empirically -- requesting 500 still returned
-    only 100). This loop therefore keeps paging until an actually EMPTY
-    page is returned, rather than stopping as soon as a page comes back
-    smaller than the requested limit, which would stop after page 1 every
-    time and silently miss everything beyond the first 100 events.
-    """
+    """Page through closed events tagged Finance, return the raw list."""
     events = []
     offset = 0
     for page_num in range(max_pages):
@@ -80,12 +77,8 @@ def fetch_closed_finance_events(limit=100, max_pages=100):
             "limit": limit,
             "offset": offset,
         }
-     resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
+        resp = requests.get(f"{GAMMA_API_BASE}/events", params=params, timeout=30)
         if resp.status_code == 422:
-            # The API appears to enforce a hard cap on how deep offset-based
-            # pagination can go. This is expected to eventually happen, not
-            # a bug -- treat it as "no more pages available" and stop here
-            # with whatever has been collected so far.
             print(f"[fx] page {page_num}: got 422 at offset {offset} -- API pagination limit reached, stopping here")
             break
         resp.raise_for_status()
@@ -95,7 +88,7 @@ def fetch_closed_finance_events(limit=100, max_pages=100):
             break
         events.extend(page)
         offset += limit
-        time.sleep(0.5)  # be polite to the API between pages
+        time.sleep(0.5)
     return events
 
 
@@ -128,12 +121,11 @@ def get_final_outcome(market):
         if not prices:
             return None
         final_price = float(prices[0])
-        # Resolved markets should settle very close to 0 or 1.
         if final_price > 0.9:
             return 1.0
         if final_price < 0.1:
             return 0.0
-        return None  # ambiguous / not cleanly resolved
+        return None
     except (ValueError, TypeError):
         return None
 
@@ -141,7 +133,7 @@ def get_final_outcome(market):
 def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK_DAYS):
     """
     Query the CLOB price-history endpoint for the implied probability at
-    approximately `lookback_days` before resolution_time.
+    approximately lookback_days before resolution_time.
     """
     target_time = resolution_time - timedelta(days=lookback_days)
     start_ts = int(target_time.timestamp())
@@ -151,7 +143,7 @@ def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK
         "market": clob_token_id,
         "startTs": start_ts,
         "endTs": end_ts,
-        "fidelity": 60,  # minutes between points
+        "fidelity": 60,
     }
     try:
         resp = requests.get(f"{CLOB_API_BASE}/prices-history", params=params, timeout=30)
@@ -163,7 +155,6 @@ def get_price_at_lookback(clob_token_id, resolution_time, lookback_days=LOOKBACK
 
     if not history:
         return None
-    # Take the point closest to the target time.
     closest = min(history, key=lambda p: abs(p.get("t", 0) - start_ts))
     return closest.get("p")
 
@@ -248,7 +239,7 @@ def main():
         row = analyze_market(market)
         if row is not None:
             results.append(row)
-        time.sleep(0.3)  # be polite to the CLOB API between requests
+        time.sleep(0.3)
 
     print(f"[fx] successfully analyzed {len(results)} markets")
 
