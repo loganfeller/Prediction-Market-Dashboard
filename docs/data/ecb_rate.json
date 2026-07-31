@@ -53,7 +53,7 @@
       "value": 2.25
     },
     {
-      "date": "2026-07-30",
+      "date": "2026-07-31",
       "value": 2.25
     }
   ],
@@ -62,42 +62,42 @@
       "slug": "will-the-ecb-announce-a-50-bps-decrease-at-the-september-2026-meeting-20260616222656563",
       "title": "Will the ECB announce a 50+ bps decrease at the September 2026 meeting?",
       "implied_probability": 0.0005,
-      "volume": 13669.291750999999,
+      "volume": 13929.291751,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 1.75
     },
     {
       "slug": "will-the-ecb-announce-a-25-bps-decrease-at-the-september-2026-meeting-20260616222656564",
       "title": "Will the ECB announce a 25 bps decrease at the September 2026 meeting?",
-      "implied_probability": 0.0035,
-      "volume": 22762.254076000005,
+      "implied_probability": 0.0055,
+      "volume": 23199.176076,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.0
     },
     {
       "slug": "will-the-ecb-announce-no-change-at-the-september-2026-meeting-20260616222656565",
       "title": "Will the ECB announce no change at the September 2026 meeting?",
-      "implied_probability": 0.115,
-      "volume": 46813.953374,
+      "implied_probability": 0.09,
+      "volume": 49565.56752000001,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.25
     },
     {
       "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
       "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
-      "implied_probability": 0.845,
-      "volume": 54103.511664,
+      "implied_probability": 0.885,
+      "volume": 57024.40460200001,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.5
     },
     {
       "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-september-2026-meeting-20260616222656567",
       "title": "Will the ECB announce a 50+ bps increase at the September 2026 meeting?",
-      "implied_probability": 0.016,
-      "volume": 26173.996282,
+      "implied_probability": 0.0155,
+      "volume": 26530.924907,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.75
     }
   ],
-  "last_updated": "2026-07-30T15:16:11.093159+00:00"
+  "last_updated": "2026-07-31T15:23:59.673989+00:00"
 }

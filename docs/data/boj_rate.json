@@ -149,43 +149,43 @@
     {
       "slug": "bank-of-japan-decreases-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan decreases interest rates by 50+ bps after the July 2026 meeting?",
-      "implied_probability": 0.0005,
-      "volume": 34280.84927599999,
+      "implied_probability": 0.0,
+      "volume": 36280.849276,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.341
     },
     {
       "slug": "bank-of-japan-decreases-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan decreases interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.0005,
-      "volume": 48140.033299999996,
+      "implied_probability": 0.0,
+      "volume": 73140.0333,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.591
     },
     {
       "slug": "no-change-in-bank-of-japans-interest-rates-after-the-july-2026-meeting",
       "title": "No change in Bank of Japan\u2019s interest rates after the July 2026 meeting?",
-      "implied_probability": 0.9815,
-      "volume": 160418.80089599997,
+      "implied_probability": 1.0,
+      "volume": 348694.4932520003,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.841
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan increases interest rates by 25 bps after the July 2026 meeting?",
-      "implied_probability": 0.014,
-      "volume": 178853.650152,
+      "implied_probability": 0.0,
+      "volume": 253495.43630700003,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 1.091
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan increases interest rates by 50+ bps after the July 2026 meeting?",
-      "implied_probability": 0.0005,
-      "volume": 170349.82195,
+      "implied_probability": 0.0,
+      "volume": 180399.95195000005,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 1.341
     }
   ],
-  "last_updated": "2026-07-30T15:16:11.093159+00:00"
+  "last_updated": "2026-07-31T15:23:59.673989+00:00"
 }
