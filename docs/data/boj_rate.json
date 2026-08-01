@@ -150,7 +150,7 @@
       "slug": "bank-of-japan-decreases-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan decreases interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0,
-      "volume": 36280.849276,
+      "volume": 36280.84927600001,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.341
     },
@@ -166,7 +166,7 @@
       "slug": "no-change-in-bank-of-japans-interest-rates-after-the-july-2026-meeting",
       "title": "No change in Bank of Japan\u2019s interest rates after the July 2026 meeting?",
       "implied_probability": 1.0,
-      "volume": 348694.4932520003,
+      "volume": 348694.493252,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 0.841
     },
@@ -174,7 +174,7 @@
       "slug": "bank-of-japan-increases-interest-rates-by-25-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan increases interest rates by 25 bps after the July 2026 meeting?",
       "implied_probability": 0.0,
-      "volume": 253495.43630700003,
+      "volume": 253495.43630699997,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 1.091
     },
@@ -182,10 +182,10 @@
       "slug": "bank-of-japan-increases-interest-rates-by-50-bps-after-the-july-2026-meeting",
       "title": "Bank of Japan increases interest rates by 50+ bps after the July 2026 meeting?",
       "implied_probability": 0.0,
-      "volume": 180399.95195000005,
+      "volume": 180399.95195000008,
       "close_time": "2026-07-31T00:00:00Z",
       "strike": 1.341
     }
   ],
-  "last_updated": "2026-07-31T15:23:59.673989+00:00"
+  "last_updated": "2026-08-01T14:37:26.716983+00:00"
 }
