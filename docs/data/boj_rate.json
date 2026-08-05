@@ -1,10 +1,6 @@
 {
   "official": [
     {
-      "date": "2023-07-01",
-      "value": -0.046
-    },
-    {
       "date": "2023-08-01",
       "value": -0.063
     },
@@ -143,6 +139,10 @@
     {
       "date": "2026-06-01",
       "value": 0.841
+    },
+    {
+      "date": "2026-07-01",
+      "value": 0.978
     }
   ],
   "market": [
@@ -152,7 +152,7 @@
       "implied_probability": 0.0,
       "volume": 36280.84927600001,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.341
+      "strike": 0.478
     },
     {
       "slug": "bank-of-japan-decreases-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -160,7 +160,7 @@
       "implied_probability": 0.0,
       "volume": 73140.0333,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.591
+      "strike": 0.728
     },
     {
       "slug": "no-change-in-bank-of-japans-interest-rates-after-the-july-2026-meeting",
@@ -168,7 +168,7 @@
       "implied_probability": 1.0,
       "volume": 348694.493252,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 0.841
+      "strike": 0.978
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -176,7 +176,7 @@
       "implied_probability": 0.0,
       "volume": 253495.43630699997,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 1.091
+      "strike": 1.228
     },
     {
       "slug": "bank-of-japan-increases-interest-rates-by-50-bps-after-the-july-2026-meeting",
@@ -184,8 +184,8 @@
       "implied_probability": 0.0,
       "volume": 180399.95195000008,
       "close_time": "2026-07-31T00:00:00Z",
-      "strike": 1.341
+      "strike": 1.478
     }
   ],
-  "last_updated": "2026-08-04T15:28:04.786311+00:00"
+  "last_updated": "2026-08-05T15:19:32.597395+00:00"
 }
