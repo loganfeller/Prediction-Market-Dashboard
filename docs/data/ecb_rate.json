@@ -53,7 +53,7 @@
       "value": 2.25
     },
     {
-      "date": "2026-08-07",
+      "date": "2026-08-10",
       "value": 2.25
     }
   ],
@@ -69,7 +69,7 @@
     {
       "slug": "will-the-ecb-announce-a-25-bps-decrease-at-the-september-2026-meeting-20260616222656564",
       "title": "Will the ECB announce a 25 bps decrease at the September 2026 meeting?",
-      "implied_probability": 0.0025,
+      "implied_probability": 0.0035,
       "volume": 25359.389076000007,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.0
@@ -78,26 +78,26 @@
       "slug": "will-the-ecb-announce-no-change-at-the-september-2026-meeting-20260616222656565",
       "title": "Will the ECB announce no change at the September 2026 meeting?",
       "implied_probability": 0.15,
-      "volume": 55791.752089999994,
+      "volume": 56391.75209000001,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.25
     },
     {
       "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
       "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
-      "implied_probability": 0.845,
-      "volume": 66691.94043,
+      "implied_probability": 0.82,
+      "volume": 69120.68095899999,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.5
     },
     {
       "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-september-2026-meeting-20260616222656567",
       "title": "Will the ECB announce a 50+ bps increase at the September 2026 meeting?",
-      "implied_probability": 0.0155,
+      "implied_probability": 0.0145,
       "volume": 28258.366827,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.75
     }
   ],
-  "last_updated": "2026-08-09T13:53:11.138451+00:00"
+  "last_updated": "2026-08-10T14:22:07.317372+00:00"
 }
