@@ -53,7 +53,7 @@
       "value": 2.25
     },
     {
-      "date": "2026-08-12",
+      "date": "2026-08-13",
       "value": 2.25
     }
   ],
@@ -62,23 +62,23 @@
       "slug": "will-the-ecb-announce-a-50-bps-decrease-at-the-september-2026-meeting-20260616222656563",
       "title": "Will the ECB announce a 50+ bps decrease at the September 2026 meeting?",
       "implied_probability": 0.0005,
-      "volume": 13929.291751,
+      "volume": 14929.291751,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 1.75
     },
     {
       "slug": "will-the-ecb-announce-a-25-bps-decrease-at-the-september-2026-meeting-20260616222656564",
       "title": "Will the ECB announce a 25 bps decrease at the September 2026 meeting?",
-      "implied_probability": 0.002,
-      "volume": 28505.899075999998,
+      "implied_probability": 0.001,
+      "volume": 29581.879076,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.0
     },
     {
       "slug": "will-the-ecb-announce-no-change-at-the-september-2026-meeting-20260616222656565",
       "title": "Will the ECB announce no change at the September 2026 meeting?",
-      "implied_probability": 0.13,
-      "volume": 64041.58209,
+      "implied_probability": 0.125,
+      "volume": 65513.008755,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.25
     },
@@ -86,7 +86,7 @@
       "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
       "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
       "implied_probability": 0.865,
-      "volume": 76159.17873899998,
+      "volume": 78136.03112500001,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.5
     },
@@ -94,10 +94,10 @@
       "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-september-2026-meeting-20260616222656567",
       "title": "Will the ECB announce a 50+ bps increase at the September 2026 meeting?",
       "implied_probability": 0.006,
-      "volume": 31260.196827000007,
+      "volume": 32121.309684000003,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.75
     }
   ],
-  "last_updated": "2026-08-12T14:22:24.516578+00:00"
+  "last_updated": "2026-08-13T14:24:27.722088+00:00"
 }
