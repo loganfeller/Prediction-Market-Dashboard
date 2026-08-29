@@ -77,16 +77,16 @@
     {
       "slug": "will-the-ecb-announce-no-change-at-the-september-2026-meeting-20260616222656565",
       "title": "Will the ECB announce no change at the September 2026 meeting?",
-      "implied_probability": 0.0165,
-      "volume": 82191.91301800002,
+      "implied_probability": 0.0145,
+      "volume": 82499.950518,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.25
     },
     {
       "slug": "will-the-ecb-announce-a-25-bps-increase-at-the-september-2026-meeting-20260616222656566",
       "title": "Will the ECB announce a 25 bps increase at the September 2026 meeting?",
-      "implied_probability": 0.9805,
-      "volume": 101096.83440099999,
+      "implied_probability": 0.983,
+      "volume": 101893.04191499998,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.5
     },
@@ -94,10 +94,10 @@
       "slug": "will-the-ecb-announce-a-50-bps-increase-at-the-september-2026-meeting-20260616222656567",
       "title": "Will the ECB announce a 50+ bps increase at the September 2026 meeting?",
       "implied_probability": 0.0025,
-      "volume": 37500.016767,
+      "volume": 37500.01676700001,
       "close_time": "2026-09-10T11:59:00Z",
       "strike": 2.75
     }
   ],
-  "last_updated": "2026-08-28T22:58:14.373593+00:00"
+  "last_updated": "2026-08-29T17:02:56.659458+00:00"
 }
