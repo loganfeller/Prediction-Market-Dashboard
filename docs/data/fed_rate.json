@@ -1,10 +1,6 @@
 {
   "official": [
     {
-      "date": "2023-10-01",
-      "value": 5.33
-    },
-    {
       "date": "2023-11-01",
       "value": 5.33
     },
@@ -143,6 +139,10 @@
     {
       "date": "2026-09-01",
       "value": 3.75
+    },
+    {
+      "date": "2026-10-01",
+      "value": 3.88
     }
   ],
   "market": [
@@ -152,7 +152,7 @@
       "implied_probability": 0.0,
       "volume": 22015343.545755006,
       "close_time": "2026-07-29T00:00:00Z",
-      "strike": 3.25
+      "strike": 3.38
     },
     {
       "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -160,7 +160,7 @@
       "implied_probability": 0.0,
       "volume": 27994692.422440995,
       "close_time": "2026-07-29T00:00:00Z",
-      "strike": 3.5
+      "strike": 3.63
     },
     {
       "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
@@ -168,7 +168,7 @@
       "implied_probability": 1.0,
       "volume": 40497085.547722004,
       "close_time": "2026-07-29T00:00:00Z",
-      "strike": 3.75
+      "strike": 3.88
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
@@ -176,7 +176,7 @@
       "implied_probability": 0.0,
       "volume": 25890005.575899016,
       "close_time": "2026-07-29T00:00:00Z",
-      "strike": 4.0
+      "strike": 4.13
     },
     {
       "slug": "will-the-fed-increase-interest-rates-by-50-bps-after-the-july-2026-meeting",
@@ -184,8 +184,8 @@
       "implied_probability": 0.0,
       "volume": 27556966.68968001,
       "close_time": "2026-07-29T00:00:00Z",
-      "strike": 4.25
+      "strike": 4.38
     }
   ],
-  "last_updated": "2026-11-01T18:20:18.484220+00:00"
+  "last_updated": "2026-11-02T22:14:54.002367+00:00"
 }
